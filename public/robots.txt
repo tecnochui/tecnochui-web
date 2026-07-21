@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.tecnochui.com.ve/sitemap-index.xml

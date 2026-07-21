@@ -19,7 +19,29 @@ const { title = 'tecnochui', description = 'Soluciones tecnológicas en terminal
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <!-- TODO: agregar favicon.svg en /public cuando esté listo, y volver a enlazarlo aquí -->
+
+    <!-- ========== POLÍTICA DE SEGURIDAD DE CONTENIDO (CSP) ========== -->
+    <!-- 
+      Permite:
+      - Conexiones a Formspree para el envío del formulario.
+      - Estilos inline (necesario para Tailwind y estilos dinámicos).
+      - Fuentes de Google Fonts.
+      - Imágenes desde el propio dominio y data: (para inline SVGs).
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        connect-src 'self' https://formspree.io;
+        style-src 'unsafe-inline' 'self' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        script-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+      "
+    />
+
+    <!-- TODO: agregar favicon.svg en /public cuando esté listo -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
   </head>
   <body>
     <Header />
