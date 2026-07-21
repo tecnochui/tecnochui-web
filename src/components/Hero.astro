@@ -1,0 +1,86 @@
+---
+// Líneas simuladas de una terminal de infraestructura.
+// type: 'comment' | 'command' | 'output' | 'ok' | 'muted'
+const terminalLines = [
+  { type: 'command', prompt: '~/infra', text: 'ssh admin@core.tecnochui.internal' },
+  { type: 'output', text: 'Última conexión: hoy desde 10.0.4.12' },
+  { type: 'command', prompt: '~/infra', text: 'terraform apply -auto-approve' },
+  { type: 'ok', text: '✓ 12 recursos aplicados sin errores' },
+  { type: 'command', prompt: '~/infra', text: 'kubectl get pods -n prod' },
+  { type: 'output', text: 'api-gateway     Running   99.98% uptime' },
+  { type: 'output', text: 'firewall-edge   Running   99.99% uptime' },
+  { type: 'command', prompt: '~/infra', text: 'ufw status verbose' },
+  { type: 'ok', text: '✓ Firewall activo — 0 puertos expuestos' },
+];
+---
+
+<section class="py-8 md:py-12">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+    <!-- Columna izquierda: titular y CTAs -->
+    <div class="relative">
+      <span class="eyebrow mb-5">Sistema en línea 24/7</span>
+
+      <h1 class="font-display text-4xl md:text-5xl xl:text-6xl font-bold leading-[1.05] mt-2">
+        <span class="text-white">Infraestructura</span>
+        <span class="text-primary text-glow"> tecnológica</span>
+        <br />
+        <span class="text-secondary text-glow-blue">a prueba de fallos.</span>
+      </h1>
+
+      <p class="text-base md:text-lg text-gray-300 max-w-lg leading-relaxed mt-5">
+        <span class="text-secondary">//</span> Infraestructura, ciberseguridad, virtualización, redes
+        y capacitación técnica — todo administrado como código, con la disciplina de un equipo
+        de operaciones que nunca duerme.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 mt-8">
+        <a href="/contacto" class="btn-primary">./contactar</a>
+        <a href="/servicios" class="btn-secondary">./servicios</a>
+      </div>
+
+      <div class="mt-8 flex items-center gap-3 text-sm">
+        <span class="cursor-blink text-primary">_</span>
+        <span class="text-xs text-gray-500 tracking-wide">
+          SYSTEM: <span class="text-primary">ONLINE</span> · UPTIME: <span class="text-secondary">24/7</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Columna derecha: panel de terminal simulado -->
+    <div class="panel panel-glow relative overflow-hidden">
+      <!-- Barra superior de la ventana -->
+      <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-700 bg-bg-raised">
+        <span class="w-2.5 h-2.5 rounded-full bg-gray-600"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-gray-600"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-primary shadow-glow-sm"></span>
+        <span class="ml-3 text-xs text-gray-400">infra.sh — tecnochui</span>
+      </div>
+
+      <!-- Cuerpo de la terminal -->
+      <div class="px-4 py-4 md:px-5 md:py-5 font-mono text-[13px] md:text-sm leading-relaxed overflow-x-auto">
+        {terminalLines.map((line) => (
+          <div class="whitespace-pre">
+            {line.type === 'command' && (
+              <p>
+                <span class="text-secondary">{line.prompt}</span>
+                <span class="text-gray-500"> $ </span>
+                <span class="text-white">{line.text}</span>
+              </p>
+            )}
+            {line.type === 'output' && (
+              <p class="text-gray-400 pl-1">{line.text}</p>
+            )}
+            {line.type === 'ok' && (
+              <p class="text-primary pl-1">{line.text}</p>
+            )}
+          </div>
+        ))}
+        <p class="mt-1">
+          <span class="text-secondary">~/infra</span>
+          <span class="text-gray-500"> $ </span>
+          <span class="cursor-blink text-white"></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

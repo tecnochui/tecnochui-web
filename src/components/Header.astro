@@ -1,0 +1,119 @@
+---
+import logo from '../assets/logo.png';
+import { Image } from 'astro:assets';
+
+const navLinks = [
+  { href: '/', label: '~/inicio' },
+  { href: '/servicios', label: '~/servicios' },
+  { href: '/blog', label: '~/blog' },
+  { href: '/contacto', label: '~/contacto' },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-gray-700 bg-bg/90 backdrop-blur-sm shadow-glow-sm">
+  <div class="container mx-auto max-w-4xl px-4 py-3 flex items-center justify-between">
+    <!-- Logo y prompt -->
+    <a href="/" class="flex items-center gap-3 group">
+      <img 
+        src="/logo.png" 
+        alt="Tecnochui:~$ shadow" 
+        class="h-7 w-auto object-contain transition duration-300 group-hover:scale-105" 
+      />
+      <span class="text-gray-500 text-xs hidden sm:inline font-mono">v1.0</span>
+    </a>
+    <!-- Menú de navegación (escritorio) -->
+    <nav class="hidden md:flex items-center gap-6 text-sm">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="text-primary/80 hover:text-primary transition px-2 py-1 rounded border border-transparent hover:border-primary/20"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- CTA (escritorio) -->
+    <div class="hidden md:block">
+      <a href="/contacto" class="btn-primary">
+        ./contactar
+      </a>
+    </div>
+
+    <!-- Botón hamburguesa (móvil) -->
+    <button
+      id="menu-toggle"
+      class="md:hidden text-primary hover:text-white transition p-2 rounded border border-transparent hover:border-primary/20"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menú desplegable (móvil) -->
+  <nav
+    id="mobile-menu"
+    class="md:hidden hidden border-t border-gray-700 bg-bg-panel/95 backdrop-blur-sm"
+  >
+    <div class="container mx-auto max-w-4xl px-4 py-4 flex flex-col gap-1 text-sm">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="text-primary/80 hover:text-primary transition px-3 py-2 rounded border border-transparent hover:border-primary/20 hover:bg-bg-panel-hover"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a href="/contacto" class="btn-primary justify-center mt-2">
+        ./contactar
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggleButton = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  if (toggleButton && mobileMenu && iconOpen && iconClose) {
+    toggleButton.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('hidden') === false;
+
+      toggleButton.setAttribute('aria-expanded', String(isOpen));
+      toggleButton.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+      iconOpen.classList.toggle('hidden', isOpen);
+      iconClose.classList.toggle('hidden', !isOpen);
+    });
+
+    // Cierra el menú al navegar a un enlace (útil en mobile)
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        toggleButton.setAttribute('aria-expanded', 'false');
+        toggleButton.setAttribute('aria-label', 'Abrir menú');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      });
+    });
+
+    // Cierra el menú si la ventana crece a escritorio
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        toggleButton.setAttribute('aria-expanded', 'false');
+        toggleButton.setAttribute('aria-label', 'Abrir menú');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      }
+    });
+  }
+</script>

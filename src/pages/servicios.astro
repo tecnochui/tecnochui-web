@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const servicios = [
+  {
+    categoria: 'Soporte Técnico',
+    icon: 'support',
+    items: [
+      'Soporte técnico a PC y laptops (Windows/Linux): diagnóstico, mantenimiento correctivo y preventivo',
+      'Atención de usuarios y helpdesk con tiempos de respuesta rápidos',
+      'Soporte a redes y servidores en sitio o remoto',
+    ],
+  },
+  {
+    categoria: 'Infraestructura & Servidores',
+    icon: 'server',
+    items: [
+      'Administración de Active Directory con Windows Server',
+      'Instalación, configuración y administración de Linux (CLI y gráfico): Debian, Ubuntu, Linux Mint',
+      'Configuración y administración de LDAP Samba, e implementación de GPO en dominios',
+      'Instalación, configuración y administración de NAS y TrueNAS',
+      'Diseño e implementación de políticas de copias de seguridad y recuperación ante desastres (DRP)',
+    ],
+  },
+  {
+    categoria: 'Virtualización & Nube',
+    icon: 'layers',
+    items: [
+      'Instalación, configuración y administración de hipervisores: Proxmox, VMware ESXi, Hyper-V',
+      'Implementación y gestión de Docker y entornos de contenedorización para producción',
+      'Instalación, configuración y administración de nubes privadas con Nextcloud',
+      'Integración de herramientas colaborativas en entornos seguros',
+    ],
+  },
+  {
+    categoria: 'Redes & Conectividad',
+    icon: 'network',
+    items: [
+      'Diseño e instalación de cableado estructurado y redes inalámbricas (WiFi)',
+      'Instalación, configuración y administración de switches',
+      'Diseño y administración de redes LAN/WAN',
+      'Consultoría en infraestructura de conectividad',
+    ],
+  },
+  {
+    categoria: 'Ciberseguridad & Firewalls',
+    icon: 'shield',
+    items: [
+      'Instalación y configuración de firewalls: Sophos XG, Cisco Meraki, pfSense, OPNsense',
+      'Gestión de políticas de seguridad con UFW e IPTables',
+      'Diseño e implementación de políticas de ciberseguridad',
+      'Auditoría y cumplimiento normativo (NIST, ISO)',
+      'Desarrollo web seguro apoyado en IA, siguiendo normas NIST e ISO',
+    ],
+  },
+  {
+    categoria: 'Capacitación, IA & Gobierno Digital',
+    icon: 'academic',
+    items: [
+      'Cursos de ciberseguridad para PyMES, gerentes y directores',
+      'Capacitación en ciberseguridad para usuarios finales',
+      'Cursos especializados para el uso correcto de la IA en entornos públicos y privados',
+      'Asesoría en Ley de Infogobierno y políticas de gobierno electrónico',
+      'Elaboración de manuales y procedimientos técnicos, de ciberseguridad y de soporte',
+    ],
+  },
+];
+
+const icons = {
+  support: 'M4 5.5h16a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1Zm4 14h8M12 15.5v4',
+  server: 'M4 4.5h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1Zm0 8h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1Zm3 2h.01M7 6.5h.01',
+  shield: 'M12 3.5l7 3v5.2c0 4.4-2.98 8.4-7 9.8-4.02-1.4-7-5.4-7-9.8V6.5l7-3Z',
+  layers: 'M12 3.5l8 4.2-8 4.2-8-4.2 8-4.2Zm-8 8.4 8 4.2 8-4.2M4 16.1l8 4.2 8-4.2',
+  network: 'M12 4.5v4M6 18.5h12M6 18.5v-3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v3M12 8.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z',
+  academic:
+    'M12 4.5 2.5 9 12 13.5 21.5 9 12 4.5Zm-6 6.2v4.3c0 1.4 2.7 2.7 6 2.7s6-1.3 6-2.7v-4.3M21.5 9v6',
+};
+---
+
+<Layout
+  title="tecnochui | Servicios"
+  description="Soporte técnico, infraestructura, virtualización, redes, ciberseguridad y capacitación en tecnochui."
+>
+  <div class="mb-8">
+    <div class="flex items-center gap-2 text-sm text-gray-400 mb-2">
+      <span class="text-primary">$</span>
+      <span class="text-white">ls</span>
+      <span class="text-secondary">-la</span>
+      <span class="text-gray-400">~/servicios</span>
+      <span class="ml-auto text-xs badge text-gray-400">[ 6 PILARES ]</span>
+    </div>
+    <h1 class="font-display text-3xl md:text-4xl font-bold">
+      <span class="text-white">$</span> echo "<span class="text-primary text-glow">Servicios</span> <span class="text-secondary text-glow-blue">tecnochui</span>"
+    </h1>
+    <p class="text-gray-300 mt-2 max-w-2xl leading-relaxed">
+      <span class="text-secondary">//</span> Soluciones integrales de soporte, infraestructura, seguridad y transformación digital.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    {servicios.map((cat) => (
+      <div class="panel p-5">
+        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-700">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded border border-gray-700 text-primary shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+              <path d={icons[cat.icon]} />
+            </svg>
+          </span>
+          <h2 class="font-display text-lg font-bold text-white">
+            <span class="text-secondary">~/</span>{cat.categoria}
+          </h2>
+          <span class="ml-auto text-xs text-gray-500">{cat.items.length} items</span>
+        </div>
+        <ul class="space-y-2 text-sm text-gray-300">
+          {cat.items.map((item) => (
+            <li class="flex items-start gap-2 hover:text-primary transition">
+              <span class="text-primary mt-0.5 text-xs opacity-70">❯</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <div class="panel panel-glow mt-10 p-6 text-center">
+    <p class="text-gray-300 mb-4">
+      <span class="text-secondary">//</span> ¿Necesitas un servicio personalizado o tienes un proyecto en mente?
+    </p>
+    <a href="/contacto" class="btn-primary">./contactar</a>
+  </div>
+
+  <div class="mt-6 text-sm flex items-center gap-1">
+    <span class="cursor-blink text-primary">_</span>
+  </div>
+</Layout>

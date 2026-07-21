@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "target": "ESNext",
+        "jsx": "preserve",
+        "jsxImportSource": "astro",
+        "strict": false,
+        "allowJs": true,
+        "checkJs": false
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
