@@ -1,88 +1,85 @@
 ---
-import logo from '../assets/logo.png';
-import { Image } from 'astro:assets';
+import { SITE, waLink, WA_DIAGNOSTICO } from '../data/site.js';
+import { servicios } from '../data/servicios.js';
 
 const year = new Date().getFullYear();
 
 const navLinks = [
-  { href: '/', label: '~/inicio' },
-  { href: '/servicios', label: '~/servicios' },
-  { href: '/blog', label: '~/blog' },
-  { href: '/contacto', label: '~/contacto' },
-];
-
-const socialLinks = [
-  { href: 'https://github.com/tecnochui', label: 'GitHub' },
-  { href: 'https://linkedin.com/in/tecnochui', label: 'LinkedIn' },
-  { href: 'https://x.com/tecnochui', label: 'X / Twitter' },
+  { href: '/', label: 'Inicio' },
+  { href: '/clientes', label: 'Clientes' },
+  { href: '/sobre-mi', label: 'Sobre mí' },
+  { href: '/recursos', label: 'Recursos gratuitos' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contacto', label: 'Contacto' },
 ];
 ---
 
-<footer class="border-t border-gray-700 bg-bg-raised/80 backdrop-blur-sm mt-12">
-  <div class="container mx-auto max-w-4xl px-4 py-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-      <!-- Columna 1: marca -->
-      <div>
-        <div class="flex items-center gap-2 mb-3">
-          <img 
-            src="/logo.png" 
-            alt="tecnochui:~$" 
-            class="h-7 w-auto object-contain" 
-          />
-          <span class="text-gray-500 text-xs ml-1 font-mono">v1.0</span>
-        </div>
-        <p class="text-gray-300 max-w-xs leading-relaxed">
-          <span class="text-secondary">//</span> Soporte técnico, infraestructura, ciberseguridad, virtualización, redes y capacitación.
+<footer class="border-t border-gray-700 bg-bg-raised mt-12">
+  <div class="container mx-auto max-w-6xl px-4 py-10">
+    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1.4fr] gap-8 text-sm">
+      <!-- Marca -->
+      <div class="md:col-span-1">
+        <a href="/" aria-label="Tecnochui — inicio" class="inline-block mb-3">
+          <img src="/logo-claro.png" alt="Tecnochui" width="143" height="26" class="logo-light h-7 w-auto object-contain" />
+          <img src="/logo.png" alt="Tecnochui" width="143" height="26" class="logo-dark h-7 w-auto object-contain" />
+        </a>
+        <p class="text-gray-300 leading-relaxed">
+          Soporte técnico, redes, servidores y ciberseguridad para pymes y personas en {SITE.ciudad}, {SITE.pais}.
         </p>
-        <div class="mt-4 flex items-center gap-3">
-          <span class="w-2 h-2 bg-primary rounded-full animate-pulse shadow-glow-sm"></span>
-          <span class="text-xs text-gray-500 tracking-wide font-mono">SISTEMA OPERATIVO</span>
-        </div>
         <p class="text-gray-500 text-xs mt-4">
-          &copy; {year} tecnochui — <span class="text-primary">todos los derechos reservados</span>
+          &copy; {year} {SITE.nombre}. Todos los derechos reservados.
         </p>
       </div>
 
-      <!-- Columna 2: enlaces rápidos -->
+      <!-- Servicios -->
       <div>
-        <h4 class="text-primary font-display font-bold mb-3 flex items-center gap-2">
-          <span class="text-secondary">$</span> cat <span class="text-white">~/enlaces</span>
-        </h4>
-        <ul class="space-y-1.5 font-mono">
-          {navLinks.map((link) => (
+        <h4 class="text-white font-display font-bold mb-3">Servicios</h4>
+        <ul class="space-y-1.5">
+          {servicios.map((s) => (
             <li>
-              <a href={link.href} class="text-gray-300 hover:text-primary transition">
-                {link.label}
-              </a>
+              <a href={`/servicios/${s.slug}`} class="text-gray-300 hover:text-primary transition">{s.nombre}</a>
             </li>
           ))}
         </ul>
       </div>
 
-      <!-- Columna 3: contacto y redes -->
+      <!-- Navegación -->
       <div>
-        <h4 class="text-primary font-display font-bold mb-3 flex items-center gap-2">
-          <span class="text-secondary">$</span> cat <span class="text-white">~/contacto</span>
-        </h4>
-        <ul class="space-y-1.5 font-mono text-xs">
+        <h4 class="text-white font-display font-bold mb-3">El sitio</h4>
+        <ul class="space-y-1.5">
+          {navLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-gray-300 hover:text-primary transition">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contacto y redes -->
+      <div>
+        <h4 class="text-white font-display font-bold mb-3">Contacto</h4>
+        <ul class="space-y-1.5 text-gray-300">
           <li>
-            <a href="mailto:jesus.andrade@tecnochui.com.ve" class="text-gray-300 hover:text-primary transition">
-              jesus.andrade@tecnochui.com.ve
+            <a href={waLink(WA_DIAGNOSTICO)} target="_blank" rel="noopener noreferrer" class="hover:text-primary transition">
+              WhatsApp {SITE.telefono}
             </a>
           </li>
-          <li class="text-gray-400">+58-424-2890416</li>
-          <li class="text-gray-400">Caracas, Venezuela</li>
+          <li>
+            <a href={`mailto:${SITE.email}`} class="hover:text-primary transition break-words">{SITE.email}</a>
+          </li>
+          <li>{SITE.ciudad}, {SITE.pais}</li>
+          <li class="text-xs text-gray-500">Respuesta en {SITE.respuesta}</li>
         </ul>
 
         <div class="mt-4 flex flex-wrap gap-2">
-          {socialLinks.map((social) => (
+          {SITE.redes.map((red) => (
             <a
-              href={social.href}
+              href={red.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="badge hover:border-primary/50 hover:text-primary transition font-mono text-xs"
+              class="badge hover:border-primary/50 hover:text-primary transition"
             >
-              {social.label}
+              {red.label}
             </a>
           ))}
         </div>

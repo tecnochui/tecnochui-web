@@ -1,0 +1,6 @@
+---
+// Texto que cambia según el tema: lenguaje de negocio en claro, "comando" en oscuro.
+const { light, dark = light } = Astro.props;
+---
+
+<span class="t-light">{light}</span><span class="t-dark">{dark}</span>

@@ -1,46 +1,98 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { SITE } from '../data/site.js';
 import '../styles/global.css';
 
 /**
  * @typedef {Object} Props
- * @property {string} [title]
- * @property {string} [description]
+ * @property {string} title        Título SEO (≈50-60 caracteres, con la marca al final)
+ * @property {string} description  Meta descripción (≈120-155 caracteres)
+ * @property {string} [image]      Imagen para compartir (ruta en /public)
+ * @property {'website'|'article'} [type]
+ * @property {object|object[]} [jsonLd]  Datos estructurados schema.org
+ * @property {boolean} [noindex]
  */
 
-const { title = 'tecnochui', description = 'Soluciones tecnológicas en terminal' } = Astro.props;
+const {
+  title = 'Tecnochui | Soporte técnico, redes y ciberseguridad en Caracas',
+  description = 'Soporte técnico, redes, servidores y ciberseguridad para pymes en Caracas. Diagnóstico gratis y respuesta en menos de 2 horas.',
+  image = '/og-image.png',
+  type = 'website',
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImage = new URL(image, SITE.url).href;
+const ldList = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- ========== POLÍTICA DE SEGURIDAD DE CONTENIDO (CSP) ========== -->
-    <!-- 
-      Permite:
-      - Conexiones a Formspree para el envío del formulario.
-      - Estilos inline (necesario para Tailwind y estilos dinámicos).
-      - Fuentes de Google Fonts.
-      - Imágenes desde el propio dominio y data: (para inline SVGs).
-    -->
+    <!-- Open Graph / redes sociales -->
+    <meta property="og:site_name" content={SITE.nombre} />
+    <meta property="og:locale" content="es_VE" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tecnochui: soporte técnico, redes y ciberseguridad para pymes en Caracas" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@tecnochui" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Iconos -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Seguridad: política de contenido -->
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; connect-src 'self' https://formspree.io https://cloudflareinsights.com; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; img-src 'self' data:;"
     />
 
-    <!-- TODO: agregar favicon.svg en /public cuando esté listo -->
-    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+    <!-- Fuentes (con <link>: un @import dentro del CSS quedaba ignorado) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    />
+
+    <!-- Tema: se aplica antes de pintar para evitar parpadeos -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('tema');
+          document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
+
+    {ldList.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
   <body>
     <Header />
-    <main class="flex-1 container mx-auto px-4 py-8 max-w-4xl fade-in">
+    <main class="flex-1 container mx-auto px-4 py-8 max-w-6xl fade-in">
       <slot />
     </main>
     <Footer />
+    <WhatsAppFloat />
   </body>
 </html>
