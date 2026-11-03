@@ -18,22 +18,20 @@ const dateFormatter = new Intl.DateTimeFormat('es-VE', {
 ---
 
 <Layout
-  title="tecnochui | Blog"
-  description="Notas técnicas sobre infraestructura, ciberseguridad, virtualización, redes y Linux."
+  title="Blog de tecnología y ciberseguridad para pymes | Tecnochui"
+  description="Guías claras sobre soporte técnico, ciberseguridad, redes, servidores y virtualización para quienes dirigen un negocio en Venezuela."
 >
   <div class="mb-8">
-    <div class="flex items-center gap-2 text-sm text-gray-400 mb-2">
+    <div class="term-only items-center gap-2 text-sm text-gray-400 mb-2">
       <span class="text-primary">$</span>
       <span class="text-white">ls</span>
       <span class="text-secondary">-la</span>
       <span class="text-gray-400">~/blog</span>
       <span class="ml-auto text-xs badge text-gray-400">[ {posts.length} ARTÍCULOS ]</span>
     </div>
-    <h1 class="font-display text-3xl md:text-4xl font-bold">
-      <span class="text-white">$</span> echo "<span class="text-primary text-glow">Notas</span> <span class="text-secondary text-glow-blue">técnicas</span>"
-    </h1>
-    <p class="text-gray-300 mt-2 max-w-2xl leading-relaxed">
-      <span class="text-secondary">//</span> Lo que aprendemos operando infraestructura real, en texto plano.
+    <h1 class="font-display text-3xl md:text-4xl font-bold text-white">Blog de tecnología y ciberseguridad</h1>
+    <p class="text-gray-300 mt-3 max-w-2xl leading-relaxed">
+      Guías claras sobre soporte, seguridad, redes y servidores, escritas para quienes dirigen un negocio.
     </p>
   </div>
 
@@ -89,14 +87,14 @@ const dateFormatter = new Intl.DateTimeFormat('es-VE', {
         </div>
 
         <span class="inline-flex items-center gap-1 text-sm text-secondary group-hover:text-primary transition mt-4">
-          ./leer-mas <span class="transition group-hover:translate-x-0.5">→</span>
+          Leer artículo <span class="transition group-hover:translate-x-0.5">→</span>
         </span>
       </a>
     ))}
   </div>
 
   <p id="empty-state" class="hidden text-gray-500 text-sm mt-8">
-    <span class="text-secondary">//</span> No hay artículos con esa etiqueta todavía.
+    No hay artículos con esa etiqueta todavía.
   </p>
 </Layout>
 

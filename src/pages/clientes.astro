@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { clientesVisibles, desdeMasAntiguo } from '../data/clientes.js';
+
+const clientes = clientesVisibles();
+const desde = desdeMasAntiguo();
+const anio = new Date().getFullYear();
+---
+
+<Layout
+  title="Clientes fijos de Tecnochui | Soporte e infraestructura TI"
+  description={`Empresas a las que Tecnochui acompaña con su infraestructura tecnológica y soporte técnico, algunas desde ${desde}.`}
+>
+  <div class="term-only items-center gap-2 text-sm text-gray-400 mb-2">
+    <span class="text-primary">$</span><span class="text-white">cat</span>
+    <span class="text-secondary">~/clientes.txt</span>
+  </div>
+
+  <span class="eyebrow mb-3">Clientes</span>
+  <h1 class="font-display text-3xl md:text-4xl font-bold text-white leading-tight mt-2">
+    Empresas que confían en Tecnochui
+  </h1>
+  <p class="text-lg text-gray-300 mt-4 max-w-3xl leading-relaxed">
+    Clientes fijos a los que acompaño con su infraestructura tecnológica y su soporte técnico, algunos
+    desde {desde}. La mejor referencia de mi trabajo es que siguen conmigo.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
+    {clientes.map((c) => (
+      <article class="panel panel-static p-5 flex flex-col">
+        <div class="flex items-start justify-between gap-3">
+          <h2 class="font-display text-lg font-bold text-white leading-snug">{c.nombre}</h2>
+          {c.desde && <span class="badge whitespace-nowrap">Desde {c.desde}</span>}
+        </div>
+        {c.sector && <p class="text-xs uppercase tracking-wide text-gray-400 mt-1">{c.sector}</p>}
+        <p class="text-sm text-gray-300 mt-3 leading-relaxed">
+          {c.que ?? 'Cliente fijo de Tecnochui.'}
+        </p>
+        {c.desde && (
+          <p class="text-sm text-primary font-semibold mt-3">
+            {anio - c.desde} años de relación
+          </p>
+        )}
+        {c.web && (
+          <a href={c.web} target="_blank" rel="noopener noreferrer nofollow" class="text-sm font-semibold mt-auto pt-4">
+            Visitar sitio →
+          </a>
+        )}
+      </article>
+    ))}
+  </div>
+
+  <section class="panel panel-static panel-glow p-8 text-center mt-12">
+    <h2 class="font-display text-2xl font-bold text-white">¿Quieres que tu empresa sea la próxima?</h2>
+    <p class="text-gray-300 mt-2">Empecemos con un diagnóstico gratis de tu situación actual.</p>
+    <a href="/contacto" class="btn-primary mt-5">Pedir diagnóstico gratis</a>
+  </section>
+</Layout>

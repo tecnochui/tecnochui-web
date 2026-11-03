@@ -2,7 +2,7 @@
 title: "Cómo optimizar tu sitio con Astro sobre un servidor Linux"
 description: "Astro genera HTML estático por defecto, pero el servidor donde lo publicas también importa. Estas son las prácticas que usamos en producción."
 pubDate: 2026-07-20
-author: tecnochui
+author: Tecnochui
 tags: [linux, infraestructura]
 readingTime: "4 min"
 ---

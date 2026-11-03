@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import { SITE } from '../../data/site.js';
 
 /**
  * Astro 7 / Content Layer API: cada entrada usa `id` como slug de ruta.
@@ -22,14 +23,29 @@ const dateFormatter = new Intl.DateTimeFormat('es-VE', {
   month: 'long',
   year: 'numeric',
 });
+
+// Si el título + marca supera ~62 caracteres, Google lo corta: se publica solo el título.
+const seoTitle = `${post.data.title} | Tecnochui`.length > 62 ? post.data.title : `${post.data.title} | Tecnochui`;
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  author: { '@type': 'Person', name: SITE.titular, url: `${SITE.url}/sobre-mi` },
+  publisher: { '@type': 'Organization', name: SITE.nombre, url: SITE.url },
+  mainEntityOfPage: `${SITE.url}/blog/${post.id}/`,
+  image: `${SITE.url}/og-image.png`,
+};
 ---
 
-<Layout title={`tecnochui | ${post.data.title}`} description={post.data.description}>
+<Layout title={seoTitle} description={post.data.description} type="article" jsonLd={ld}>
   <a
     href="/blog/"
     class="inline-flex items-center gap-2 text-sm text-secondary hover:text-primary transition mb-6"
   >
-    <span class="text-gray-500">$</span> cd ..
+    ← Volver al blog
   </a>
 
   <article class="panel p-6 md:p-8">
@@ -62,6 +78,6 @@ const dateFormatter = new Intl.DateTimeFormat('es-VE', {
     href="/blog/"
     class="inline-flex items-center gap-2 text-sm text-secondary hover:text-primary transition mt-6"
   >
-    <span class="text-gray-500">$</span> cd ..
+    ← Volver al blog
   </a>
 </Layout>
