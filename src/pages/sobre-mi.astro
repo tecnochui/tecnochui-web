@@ -5,7 +5,7 @@ import { SITE, waLink, WA_DIAGNOSTICO } from '../data/site.js';
 
 // Fotos: dejar en src/assets/sobre-mi/ con estos nombres (jpg, png o webp):
 //   perfil.*     foto de perfil (cuadrada o vertical)
-//   ponencia.*   foto dando una charla (horizontal)
+//   ponencia.*   foto dando una charla (vertical u horizontal)
 // Si no existen, la página muestra iniciales y se oculta la sección de charlas con foto.
 const fotos = import.meta.glob('../assets/sobre-mi/*.{jpg,jpeg,png,webp}', { eager: true });
 const buscar = (nombre) =>
@@ -93,8 +93,9 @@ const ld = {
         <Image
           src={perfil}
           alt="Jesús Andrade, fundador de Tecnochui"
-          width={320}
-          height={320}
+          width={480}
+          height={480}
+          loading="eager"
           class="w-48 h-48 md:w-60 md:h-60 rounded-2xl object-cover border border-gray-700"
         />
       ) : (
@@ -130,15 +131,24 @@ const ld = {
   </section>
 
   {ponencia && (
-    <section class="mt-12">
-      <h2 class="font-display text-2xl font-bold text-white mb-5">En escena</h2>
-      <Image
-        src={ponencia}
-        alt="Jesús Andrade durante una ponencia"
-        width={1000}
-        class="w-full rounded-xl border border-gray-700 object-cover"
-      />
-      <p class="text-sm text-gray-400 mt-2">Charla en GitHub Dev Days 2026, UCAB.</p>
+    <section class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <figure class="md:order-2 max-w-xs w-full mx-auto md:mx-0 md:ml-auto">
+        <Image
+          src={ponencia}
+          alt="Jesús Andrade dando una charla frente a una pantalla de proyección"
+          width={600}
+          class="w-full rounded-xl border border-gray-700 object-cover"
+        />
+        <figcaption class="text-sm text-gray-400 mt-2">Charla en GitHub Dev Days 2026, UCAB.</figcaption>
+      </figure>
+      <div class="md:col-span-2 md:order-1">
+        <h2 class="font-display text-2xl font-bold text-white mb-3">En escena</h2>
+        <p class="text-gray-300 leading-relaxed max-w-xl">
+          Me gusta explicar la tecnología de forma clara, sea en una charla, en la radio o en una clase
+          privada para tu equipo.
+        </p>
+        <a href="/servicios/capacitacion-ia-gobierno-digital" class="inline-block font-semibold mt-4">Ver capacitación →</a>
+      </div>
     </section>
   )}
 

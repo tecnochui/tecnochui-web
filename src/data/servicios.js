@@ -166,6 +166,7 @@ export const servicios = [
       'Gestión de políticas de seguridad con UFW e IPTables',
       'Diseño e implementación de políticas de ciberseguridad',
       'Auditoría y cumplimiento normativo (NIST, ISO)',
+      'Desarrollo web seguro apoyado en IA, siguiendo normas NIST e ISO',
     ],
     faqs: [
       {
@@ -249,7 +250,7 @@ export const servicios = [
       'Diseño y desarrollo de APIs e integración entre sistemas',
       'Sistemas y herramientas internas personalizadas para tu negocio',
       'Automatización de tareas repetitivas con scripts',
-      'Desarrollo web seguro, siguiendo normas NIST e ISO',
+      'Desarrollo web seguro, aplicando las normas que correspondan (NIST, ISO)',
       'Documentación técnica del proyecto y entrega ordenada del código',
     ],
     faqs: [
