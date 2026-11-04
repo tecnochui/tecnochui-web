@@ -48,33 +48,38 @@ export const servicios = [
     ],
   },
   {
-    slug: 'infraestructura-servidores',
-    nombre: 'Servidores e infraestructura',
+    slug: 'servidores-virtualizacion-nube',
+    nombre: 'Servidores, virtualización y nube privada',
     icon: 'server',
     term: '$ systemctl status',
-    contacto: 'infraestructura',
-    recurso: 'checklist-salud-servidores',
-    corto: 'Servidores, usuarios y respaldos en orden para que tu información esté segura y disponible.',
-    h1: 'Servidores, Active Directory y respaldos para tu empresa',
-    seoTitle: 'Servidores, Active Directory y respaldos en Caracas | Tecnochui',
+    contacto: 'servidores-nube',
+    recurso: 'checklist-servidores-virtualizacion',
+    corto: 'Servidores, usuarios y respaldos en orden, con virtualización y tu propia nube privada.',
+    h1: 'Servidores, virtualización y nube privada para tu empresa',
+    seoTitle: 'Servidores, virtualización y nube privada | Tecnochui',
     seoDesc:
-      'Administración de Windows Server, Active Directory, Linux, NAS/TrueNAS y planes de respaldo y recuperación ante desastres para empresas en Caracas.',
-    lead: 'Más de 8 años administrando infraestructura tecnológica: servidores bien configurados, usuarios con los permisos correctos y respaldos que sí se pueden restaurar.',
+      'Windows Server, Active Directory, Linux, Proxmox, Hyper-V, VMware, Docker, NAS/TrueNAS, Nextcloud y respaldos para empresas en Caracas y Venezuela.',
+    lead: 'Más de 8 años administrando infraestructura tecnológica: servidores bien configurados, usuarios con los permisos correctos, respaldos que sí se pueden restaurar y, cuando conviene, virtualización para aprovechar mejor el hardware y una nube privada propia.',
     problemas: [
       'Archivos compartidos desordenados y sin control de quién accede',
       'Cada empleado con claves distintas en cada equipo, sin administración central',
       'Respaldos que nadie ha probado restaurar',
-      'Un servidor viejo que, si falla, detiene la operación',
+      'Varios servidores físicos viejos y costosos que, si fallan, detienen la operación',
+      'Licenciamiento que se encarece o dependencia de servicios externos para compartir archivos',
       'No saber qué pasaría si se pierde la información',
     ],
     paraQuien:
-      'Empresas con varios equipos que comparten archivos, sistemas administrativos o bases de datos y necesitan orden, control y continuidad.',
+      'Empresas con varios equipos que comparten archivos, sistemas administrativos o bases de datos, y organizaciones que quieren aprovechar mejor sus servidores o mantener sus datos bajo su control.',
     items: [
       'Administración de Active Directory con Windows Server',
       'Instalación, configuración y administración de Linux (CLI y gráfico): Debian, Ubuntu, Linux Mint',
       'Configuración y administración de LDAP Samba, e implementación de GPO en dominios',
       'Instalación, configuración y administración de NAS y TrueNAS',
       'Diseño e implementación de políticas de copias de seguridad y recuperación ante desastres (DRP)',
+      'Instalación, configuración y administración de hipervisores: Proxmox, VMware ESXi, Hyper-V',
+      'Implementación y gestión de Docker y entornos de contenedorización para producción',
+      'Instalación, configuración y administración de nubes privadas con Nextcloud',
+      'Integración de herramientas colaborativas en entornos seguros',
     ],
     faqs: [
       {
@@ -85,37 +90,6 @@ export const servicios = [
         q: '¿Qué es un plan de recuperación ante desastres (DRP)?',
         a: 'Es el plan que define cómo recuperar tus sistemas y datos si ocurre una falla grave: qué se respalda, dónde, cada cuánto y cuánto tarda en restaurarse.',
       },
-    ],
-  },
-  {
-    slug: 'virtualizacion-nube',
-    nombre: 'Virtualización y nube privada',
-    icon: 'layers',
-    term: '$ docker ps',
-    contacto: 'virtualizacion',
-    recurso: 'checklist-antes-de-virtualizar',
-    corto: 'Aprovecha mejor tus servidores y ten tu propia nube privada para archivos y colaboración.',
-    h1: 'Virtualización y nube privada para pymes',
-    seoTitle: 'Virtualización (Proxmox, Hyper-V) y nube privada | Tecnochui',
-    seoDesc:
-      'Virtualización con Proxmox, VMware ESXi y Hyper-V, contenedores Docker y nube privada con Nextcloud para pymes en Venezuela.',
-    lead: 'Consolida varios servidores en uno, reduce costos de hardware y mantén el control de tus datos con una nube privada propia.',
-    problemas: [
-      'Varios servidores físicos viejos y costosos de mantener',
-      'Licenciamiento que se encarece cada año',
-      'Depender de servicios externos para compartir archivos',
-      'Aplicaciones que se caen por no tener un entorno estable',
-      'Dificultad para hacer pruebas sin afectar lo que está en producción',
-    ],
-    paraQuien:
-      'Pymes con servidores propios o varias aplicaciones, y organizaciones que prefieren que sus datos permanezcan bajo su control.',
-    items: [
-      'Instalación, configuración y administración de hipervisores: Proxmox, VMware ESXi, Hyper-V',
-      'Implementación y gestión de Docker y entornos de contenedorización para producción',
-      'Instalación, configuración y administración de nubes privadas con Nextcloud',
-      'Integración de herramientas colaborativas en entornos seguros',
-    ],
-    faqs: [
       {
         q: '¿Proxmox o VMware?',
         a: 'Depende del presupuesto, del equipo que lo va a operar y de lo que necesites. En el blog tenemos una comparación: «Proxmox vs VMware ESXi».',
@@ -192,7 +166,6 @@ export const servicios = [
       'Gestión de políticas de seguridad con UFW e IPTables',
       'Diseño e implementación de políticas de ciberseguridad',
       'Auditoría y cumplimiento normativo (NIST, ISO)',
-      'Desarrollo web seguro apoyado en IA, siguiendo normas NIST e ISO',
     ],
     faqs: [
       {
@@ -207,16 +180,16 @@ export const servicios = [
   },
   {
     slug: 'capacitacion-ia-gobierno-digital',
-    nombre: 'Capacitación, IA y gobierno digital',
+    nombre: 'Capacitación, uso correcto de la IA y gobierno digital',
     icon: 'academic',
     term: '$ man tecnochui',
     contacto: 'capacitacion-ia',
     recurso: 'checklist-uso-seguro-ia',
-    corto: 'Capacita a tu equipo en ciberseguridad y en el uso responsable de la inteligencia artificial.',
-    h1: 'Capacitación en ciberseguridad, IA y gobierno digital',
-    seoTitle: 'Cursos de ciberseguridad e IA para pymes y gerentes | Tecnochui',
+    corto: 'Capacita a tu equipo en ciberseguridad y en el uso correcto de la inteligencia artificial.',
+    h1: 'Capacitación en ciberseguridad, uso correcto de la IA y gobierno digital',
+    seoTitle: 'Cursos de ciberseguridad y uso correcto de la IA | Tecnochui',
     seoDesc:
-      'Cursos y asesoría en ciberseguridad, uso responsable de IA, gobierno electrónico y Ley de Infogobierno para pymes, gerentes y organismos.',
+      'Cursos y asesoría en ciberseguridad, uso correcto de la IA, gobierno electrónico y Ley de Infogobierno para pymes, gerentes y organismos.',
     lead: 'Combino la experiencia técnica con la formación en derecho para explicar la tecnología y su marco legal en un lenguaje que se entiende.',
     problemas: [
       'Empleados que caen en correos falsos',
@@ -226,7 +199,7 @@ export const servicios = [
       'Falta de manuales y procedimientos escritos',
     ],
     paraQuien:
-      'Gerentes, directores, equipos de trabajo y organismos públicos o privados que quieren usar la tecnología de forma segura y responsable.',
+      'Gerentes, directores, equipos de trabajo y organismos públicos o privados que quieren usar la tecnología, y la IA en particular, de forma segura y correcta.',
     items: [
       'Cursos de ciberseguridad para PyMES, gerentes y directores',
       'Capacitación en ciberseguridad para usuarios finales',
@@ -236,12 +209,61 @@ export const servicios = [
     ],
     faqs: [
       {
+        q: '¿Qué significa usar bien la IA en una empresa?',
+        a: 'Saber para qué sirve, qué información nunca se le comparte, cómo verificar lo que responde y qué reglas fijar para el equipo. Aquí se enseña a usarla, no a programar con ella (eso es el servicio de desarrollo asistido con IA).',
+      },
+      {
         q: '¿Dan cursos a empresas o a personas?',
         a: 'A ambos: cursos para equipos de pymes, gerentes y directores, y clases privadas para personas.',
       },
       {
         q: '¿Qué cubre la asesoría en Ley de Infogobierno?',
         a: 'Orientación técnica y legal para organismos que implementan servicios de gobierno electrónico y políticas de gobierno digital.',
+      },
+    ],
+  },
+  {
+    slug: 'desarrollo-asistido-ia',
+    nombre: 'Desarrollo asistido con IA',
+    icon: 'code',
+    term: '$ git commit',
+    contacto: 'desarrollo-ia',
+    recurso: 'checklist-antes-de-encargar-software',
+    corto: 'Sitios web, aplicaciones, APIs y sistemas a la medida, construidos con apoyo de IA y revisión humana.',
+    h1: 'Desarrollo web y APIs a la medida, asistido con IA',
+    seoTitle: 'Desarrollo web y APIs a la medida con IA | Tecnochui',
+    seoDesc:
+      'Sitios y aplicaciones web, APIs y sistemas a la medida, desarrollados con apoyo de IA y revisión humana, para pymes y organizaciones en Venezuela.',
+    lead: 'Uso la inteligencia artificial como herramienta para construir con más rapidez, y soy yo quien diseña, revisa, prueba y documenta cada entrega. Sirve para sitios web, aplicaciones, APIs y sistemas a la medida.',
+    problemas: [
+      'Necesitas un sitio o un sistema y no sabes por dónde empezar',
+      'Procesos que haces a mano, en papel o en hojas de cálculo, y quieres automatizar',
+      'Programas que no se comunican entre sí y necesitan conectarse (APIs)',
+      'Una idea de aplicación que quieres probar sin meses de desarrollo',
+      'Un sistema a medida que nadie documentó y nadie sabe mantener',
+    ],
+    paraQuien:
+      'Pymes, profesionales y organizaciones que necesitan un sitio, una aplicación o una integración a la medida, y quieren entender qué se construye y quién lo mantiene.',
+    items: [
+      'Desarrollo de sitios y aplicaciones web a la medida, con apoyo de IA',
+      'Diseño y desarrollo de APIs e integración entre sistemas',
+      'Sistemas y herramientas internas personalizadas para tu negocio',
+      'Automatización de tareas repetitivas con scripts',
+      'Desarrollo web seguro, siguiendo normas NIST e ISO',
+      'Documentación técnica del proyecto y entrega ordenada del código',
+    ],
+    faqs: [
+      {
+        q: '¿Qué significa desarrollo asistido con IA?',
+        a: 'Que uso herramientas de inteligencia artificial para acelerar la escritura de código y de documentación, pero el diseño, la revisión, las pruebas y la seguridad los hago yo. La IA es una herramienta; no sustituye la revisión humana.',
+      },
+      {
+        q: '¿Haces APIs e integraciones?',
+        a: 'Sí: diseño y desarrollo de APIs, y conexión entre sistemas que hoy no se comunican entre sí.',
+      },
+      {
+        q: '¿Quién se queda con el código?',
+        a: 'Es un punto que se define por escrito antes de empezar. Lo recomendable es que el código, el dominio y los accesos queden a nombre de quien encarga el proyecto.',
       },
     ],
   },
