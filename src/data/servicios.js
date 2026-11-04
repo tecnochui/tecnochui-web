@@ -35,7 +35,7 @@ export const servicios = [
     faqs: [
       {
         q: '¿El diagnóstico tiene costo?',
-        a: 'No. El diagnóstico es gratis. Si el caso requiere una visita técnica en sitio, esa visita se cotiza aparte.',
+        a: 'No. El diagnóstico es gratis, incluso si hay que hacerlo en sitio.',
       },
       {
         q: '¿Atienden en sitio o de forma remota?',
@@ -256,7 +256,15 @@ export const servicios = [
     faqs: [
       {
         q: '¿Qué significa desarrollo asistido con IA?',
-        a: 'Que uso herramientas de inteligencia artificial para acelerar la escritura de código y de documentación, pero el diseño, la revisión, las pruebas y la seguridad los hago yo. La IA es una herramienta; no sustituye la revisión humana.',
+        a: 'Significa que utilizo herramientas de inteligencia artificial para agilizar la escritura de código y documentación. Sin embargo, el diseño de la arquitectura, la revisión del código, las pruebas de funcionamiento y la seguridad las realizo y superviso personalmente. La IA acelera los tiempos de entrega, pero el criterio y la garantía técnica siguen siendo 100% humanos.',
+      },
+      {
+        q: '¿Esto es vibe coding o es programación?',
+        a: 'Son cosas distintas. El vibe coding es pedirle a una IA que genere una aplicación y aceptar el resultado sin entenderlo ni revisarlo: puede funcionar en una demo, pero suele fallar en seguridad, orden y mantenimiento. La programación asistida con IA parte de una arquitectura pensada, usa la IA para escribir más rápido y exige que una persona revise, pruebe y documente cada parte. Yo hago lo segundo, no lo primero.',
+      },
+      {
+        q: '¿En qué te apoyas para garantizar la calidad?',
+        a: 'En normas ISO/IEC y NIST para dar estructura, seguridad y documentación al proyecto, y en la cultura DevSecOps, que incorpora la seguridad desde el diseño y no solo al despliegue (no solo DevOps). Puedo hacerlo porque reúno de forma integral cinco áreas con experiencia: administración de sistemas, soporte técnico, redes, ciberseguridad y desarrollo.',
       },
       {
         q: '¿Haces APIs e integraciones?',
