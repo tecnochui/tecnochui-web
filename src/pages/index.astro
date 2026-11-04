@@ -2,42 +2,135 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import ServicesBento from '../components/ServicesBento.astro';
+import { getCollection } from 'astro:content';
+import { SITE, waLink, WA_DIAGNOSTICO } from '../data/site.js';
+import { recursos } from '../data/recursos.js';
 
-const posts = [
-  { title: 'Cómo optimizar tu sitio web con Astro', date: '2026-07-20', href: '#' },
-  { title: 'Introducción a la ciberseguridad perimetral', date: '2026-07-18', href: '#' },
-  { title: 'Despliegue en GitHub Pages con Astro', date: '2026-07-15', href: '#' },
+// Últimos 3 artículos publicados, leídos de la colección real del blog.
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const dateFormatter = new Intl.DateTimeFormat('es-VE', { day: 'numeric', month: 'short', year: 'numeric' });
+const posts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3)
+  .map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    date: dateFormatter.format(post.data.pubDate),
+    href: `/blog/${post.id}/`,
+  }));
+
+const pasos = [
+  {
+    n: '1',
+    t: 'Cuéntame tu caso',
+    d: 'Por WhatsApp o con el formulario. Respondo en menos de 2 horas en horario laboral.',
+  },
+  {
+    n: '2',
+    t: 'Diagnóstico gratis',
+    d: 'Reviso qué está pasando y te explico, sin tecnicismos, qué opciones tienes.',
+  },
+  {
+    n: '3',
+    t: 'Propuesta y solución',
+    d: 'Si hace falta hacerlo en sitio, también es gratis. Tú decides si seguimos.',
+  },
 ];
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: SITE.nombre,
+  url: SITE.url,
+  image: `${SITE.url}/og-image.png`,
+  description:
+    'Soporte técnico, redes, servidores y virtualización, ciberseguridad, capacitación y desarrollo asistido con IA para pymes y personas en Caracas, Venezuela.',
+  telephone: '+584242890416',
+  email: SITE.email,
+  areaServed: [
+    { '@type': 'City', name: 'Caracas' },
+    { '@type': 'Country', name: 'Venezuela' },
+  ],
+  address: { '@type': 'PostalAddress', addressLocality: 'Caracas', addressCountry: 'VE' },
+  founder: { '@type': 'Person', name: SITE.titular, url: `${SITE.url}/sobre-mi` },
+  sameAs: SITE.redes.map((r) => r.href),
+};
 ---
 
 <Layout
-  title="tecnochui | infraestructura, ciberseguridad y redes"
-  description="Infraestructura, ciberseguridad, virtualización, redes y capacitación técnica en tecnochui."
+  title="Soporte técnico, redes y ciberseguridad en Caracas | Tecnochui"
+  description="Soporte técnico, redes, servidores, ciberseguridad y desarrollo con IA para pymes en Caracas. Diagnóstico gratis y respuesta en menos de 2 horas."
+  jsonLd={ld}
 >
   <Hero />
+
   <ServicesBento />
 
-  <!-- Sección: últimos artículos -->
-  <section class="panel p-6 mt-4">
-    <div class="flex items-center gap-2 mb-4">
-      <span class="text-secondary">$</span>
-      <h2 class="font-display text-lg font-bold text-white">cat ~/blog/ultimos</h2>
+  <!-- Cómo trabajo -->
+  <section class="py-8">
+    <span class="eyebrow mb-3">Cómo trabajo</span>
+    <h2 class="font-display text-2xl md:text-3xl font-bold text-white mt-2 mb-6">Simple y sin sorpresas</h2>
+    <ol class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {pasos.map((p) => (
+        <li class="panel panel-static p-5">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-[color:var(--c-on-primary)] font-bold text-sm">{p.n}</span>
+          <h3 class="font-display font-bold text-white mt-3">{p.t}</h3>
+          <p class="text-sm text-gray-300 mt-1 leading-relaxed">{p.d}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- Recursos gratuitos -->
+  <section class="py-8">
+    <div class="flex items-end justify-between gap-4 mb-6">
+      <div>
+        <span class="eyebrow mb-3">Recursos gratuitos</span>
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white mt-2">Checklists para revisar tu negocio hoy</h2>
+      </div>
+      <a href="/recursos" class="font-semibold whitespace-nowrap hidden sm:block">Ver todos →</a>
     </div>
-    <ul class="space-y-1">
-      {posts.map((post, i) => (
-        <li
-          class:list={[
-            'flex items-center gap-2 py-2 text-sm',
-            i < posts.length - 1 ? 'border-b border-gray-700' : '',
-          ]}
-        >
-          <span class="text-primary">&gt;</span>
-          <a href={post.href} class="text-gray-200 hover:text-primary transition">
-            {post.title}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {recursos.slice(0, 3).map((r) => (
+        <a href={`/recursos/${r.slug}`} class="panel p-5 flex flex-col">
+          <h3 class="font-display font-bold text-white leading-snug">{r.titulo}</h3>
+          <p class="text-sm text-gray-300 mt-2 leading-relaxed">{r.desc}</p>
+          <span class="text-sm font-semibold text-secondary mt-auto pt-4">Abrir checklist →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section class="py-8">
+    <div class="flex items-end justify-between gap-4 mb-6">
+      <div>
+        <span class="eyebrow mb-3">Blog</span>
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-white mt-2">Últimos artículos</h2>
+      </div>
+      <a href="/blog" class="font-semibold whitespace-nowrap hidden sm:block">Ver el blog →</a>
+    </div>
+    <ul class="panel panel-static divide-y divide-gray-700">
+      {posts.map((post) => (
+        <li>
+          <a href={post.href} class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 px-5 py-4 hover:bg-bg-panel-hover transition">
+            <span class="text-gray-100 font-semibold">{post.title}</span>
+            <span class="sm:ml-auto text-xs text-gray-500 whitespace-nowrap">{post.date}</span>
           </a>
-          <span class="ml-auto text-xs text-gray-500">{post.date}</span>
         </li>
       ))}
     </ul>
+  </section>
+
+  <!-- Cierre -->
+  <section class="panel panel-static panel-glow p-8 text-center mt-4">
+    <h2 class="font-display text-2xl md:text-3xl font-bold text-white">¿Tienes un problema de tecnología en tu negocio?</h2>
+    <p class="text-gray-300 mt-3 max-w-xl mx-auto">
+      Cuéntamelo y te hago un diagnóstico gratis. Si no es algo que pueda resolver, te lo digo de frente.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3 mt-6">
+      <a href="/contacto" class="btn-primary">Pedir diagnóstico gratis</a>
+      <a href={waLink(WA_DIAGNOSTICO)} target="_blank" rel="noopener noreferrer" class="btn-secondary">Escribir por WhatsApp</a>
+    </div>
   </section>
 </Layout>

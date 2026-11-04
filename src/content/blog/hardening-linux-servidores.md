@@ -2,7 +2,7 @@
 title: "Hardening de servidores Linux: la checklist esencial"
 description: "Diez pasos concretos para reducir la superficie de ataque de un servidor Debian o Ubuntu recién instalado, antes de ponerlo en producción."
 pubDate: 2026-07-10
-author: tecnochui
+author: Tecnochui
 tags: [linux, ciberseguridad]
 readingTime: "5 min"
 ---

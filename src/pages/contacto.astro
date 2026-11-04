@@ -1,168 +1,111 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-// --------------------------------------------------------------------
-// Integración de envío sin backend propio.
-// Reemplaza este endpoint por el tuyo de Formspree o Web3Forms:
-//   Formspree:  https://formspree.io/f/TU_ID
-//   Web3Forms:  https://api.web3forms.com/submit
-// Si usas Web3Forms, agrega tu access_key como <input type="hidden">
-// dentro del <form> (ya dejamos el campo comentado más abajo).
-// --------------------------------------------------------------------
-const FORM_ENDPOINT = 'https://formspree.io/f/maqrjrbk';
+import { SITE, waLink, WA_DIAGNOSTICO } from '../data/site.js';
 
 const tiposServicio = [
-  { value: 'soporte-tecnico', label: 'Soporte Técnico' },
-  { value: 'infraestructura', label: 'Infraestructura' },
-  { value: 'virtualizacion', label: 'Virtualización' },
-  { value: 'redes', label: 'Redes' },
-  { value: 'ciberseguridad', label: 'Ciberseguridad' },
-  { value: 'capacitacion-ia', label: 'Capacitación / IA' },
+  { value: 'soporte-tecnico', label: 'Soporte técnico' },
+  { value: 'servidores-nube', label: 'Servidores, virtualización y nube privada' },
+  { value: 'redes', label: 'Redes y conectividad' },
+  { value: 'ciberseguridad', label: 'Ciberseguridad y firewalls' },
+  { value: 'capacitacion-ia', label: 'Capacitación, uso correcto de la IA y gobierno digital' },
+  { value: 'desarrollo-ia', label: 'Desarrollo web y APIs asistido con IA' },
+  { value: 'no-lo-se', label: 'No estoy seguro / otro' },
 ];
 
 const canales = [
-  { label: 'Email', value: 'jesus.andrade@tecnochui.com.ve', href: 'mailto:jesus.andrade@tecnochui.com.ve' },
-  { label: 'WhatsApp', value: '+58 424 289 0416', href: 'https://wa.me/584242890416' },
+  { label: 'WhatsApp', value: SITE.telefono, href: waLink(WA_DIAGNOSTICO) },
+  { label: 'Correo', value: SITE.email, href: `mailto:${SITE.email}` },
   { label: 'Telegram', value: '@tecnochui', href: 'https://t.me/tecnochui' },
 ];
 ---
 
 <Layout
-  title="tecnochui | Contacto"
-  description="Escríbenos para soporte técnico, infraestructura, ciberseguridad, redes, virtualización o capacitación."
+  title="Contacto y diagnóstico gratis | Tecnochui"
+  description="Pide tu diagnóstico gratis de soporte técnico, redes, servidores o ciberseguridad en Caracas. Respondo en menos de 2 horas en horario laboral."
 >
   <div class="mb-8">
-    <div class="flex items-center gap-2 text-sm text-gray-400 mb-2">
+    <div class="term-only items-center gap-2 text-sm text-gray-400 mb-2">
       <span class="text-primary">$</span>
       <span class="text-white">./contactar</span>
       <span class="text-secondary">--nuevo-ticket</span>
       <span class="ml-auto text-xs badge text-gray-400">[ RESPUESTA &lt; 2H ]</span>
     </div>
-    <h1 class="font-display text-3xl md:text-4xl font-bold">
-      <span class="text-white">$</span> echo "<span class="text-primary text-glow">Hablemos</span> <span class="text-secondary text-glow-blue">de tu proyecto</span>"
-    </h1>
-    <p class="text-gray-300 mt-2 max-w-2xl leading-relaxed">
-      <span class="text-secondary">//</span> Cuéntanos qué necesitas y te respondemos con un plan de acción, no con un formulario más.
+    <h1 class="font-display text-3xl md:text-4xl font-bold text-white">Pide tu diagnóstico gratis</h1>
+    <p class="text-gray-300 mt-3 max-w-2xl leading-relaxed">
+      Cuéntame qué está pasando y te respondo con un plan de acción. El diagnóstico es gratis, incluso si
+      hay que hacerlo en sitio.
     </p>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
     <!-- Formulario -->
-    <div class="panel panel-glow lg:col-span-2 overflow-hidden">
-      <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-700 bg-bg-raised">
+    <div class="panel panel-static panel-glow lg:col-span-2 overflow-hidden">
+      <div class="term-only items-center gap-2 px-4 py-3 border-b border-gray-700 bg-bg-raised">
         <span class="w-2.5 h-2.5 rounded-full bg-gray-600"></span>
         <span class="w-2.5 h-2.5 rounded-full bg-gray-600"></span>
-        <span class="w-2.5 h-2.5 rounded-full bg-primary shadow-glow-sm"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
         <span class="ml-3 text-xs text-gray-400">ticket.form — tecnochui</span>
       </div>
 
-      <form
-        id="contact-form"
-        action={FORM_ENDPOINT}
-        method="POST"
-        class="p-5 md:p-6 space-y-5 font-mono"
-      >
-        <!-- Si usas Web3Forms, descomenta la línea siguiente con tu access key -->
-        <!-- <input type="hidden" name="access_key" value="TU_ACCESS_KEY" /> -->
-        <input type="hidden" name="_subject" value="Nuevo Ticket de Contacto — tecnochui.com.ve" />
+      <form id="contact-form" action={SITE.formEndpoint} method="POST" class="p-5 md:p-6 space-y-5">
+        <input type="hidden" name="_subject" value="Nueva solicitud de diagnóstico — tecnochui.com.ve" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
 
         <div>
-          <label for="nombre" class="block text-xs text-secondary uppercase tracking-wide mb-1.5">
-            $ nombre / organización
-          </label>
-          <input
-            id="nombre"
-            name="nombre"
-            type="text"
-            required
-            placeholder="Ej. María Pérez — Comercial XYZ"
-            class="w-full bg-bg-raised border border-gray-700 rounded px-3 py-2 text-sm text-white placeholder-gray-500 outline-none focus:border-primary focus:shadow-glow-sm transition"
-          />
+          <label for="nombre" class="block text-sm font-semibold text-gray-200 mb-1.5">Nombre o empresa</label>
+          <input id="nombre" name="nombre" type="text" required placeholder="Ej. María Pérez — Comercial XYZ" class="field" />
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
-            <label for="email" class="block text-xs text-secondary uppercase tracking-wide mb-1.5">
-              $ correo electrónico
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="tu@correo.com"
-              class="w-full bg-bg-raised border border-gray-700 rounded px-3 py-2 text-sm text-white placeholder-gray-500 outline-none focus:border-primary focus:shadow-glow-sm transition"
-            />
+            <label for="email" class="block text-sm font-semibold text-gray-200 mb-1.5">Correo electrónico</label>
+            <input id="email" name="email" type="email" required placeholder="tu@correo.com" class="field" />
           </div>
-
           <div>
-            <label for="telefono" class="block text-xs text-secondary uppercase tracking-wide mb-1.5">
-              $ teléfono / whatsapp <span class="text-gray-500 lowercase">(opcional)</span>
+            <label for="telefono" class="block text-sm font-semibold text-gray-200 mb-1.5">
+              WhatsApp o teléfono <span class="font-normal text-gray-500">(opcional)</span>
             </label>
-            <input
-              id="telefono"
-              name="telefono"
-              type="tel"
-              placeholder="+58 424 289 0416"
-              class="w-full bg-bg-raised border border-gray-700 rounded px-3 py-2 text-sm text-white placeholder-gray-500 outline-none focus:border-primary focus:shadow-glow-sm transition"
-            />
+            <input id="telefono" name="telefono" type="tel" placeholder="+58 424 289 0416" class="field" />
           </div>
         </div>
 
         <div>
-          <label for="servicio" class="block text-xs text-secondary uppercase tracking-wide mb-1.5">
-            $ tipo de servicio requerido
-          </label>
-          <select
-            id="servicio"
-            name="servicio"
-            required
-            class="w-full bg-bg-raised border border-gray-700 rounded px-3 py-2 text-sm text-white outline-none focus:border-primary focus:shadow-glow-sm transition appearance-none"
-          >
-            <option value="" disabled selected>Selecciona una categoría…</option>
-            {tiposServicio.map((tipo) => (
-              <option value={tipo.value}>{tipo.label}</option>
-            ))}
+          <label for="servicio" class="block text-sm font-semibold text-gray-200 mb-1.5">¿Con qué necesitas ayuda?</label>
+          <select id="servicio" name="servicio" required class="field">
+            <option value="" disabled selected>Selecciona una opción…</option>
+            {tiposServicio.map((t) => <option value={t.value}>{t.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label for="mensaje" class="block text-xs text-secondary uppercase tracking-wide mb-1.5">
-            $ mensaje / requerimiento
-          </label>
+          <label for="mensaje" class="block text-sm font-semibold text-gray-200 mb-1.5">Cuéntame qué está pasando</label>
           <textarea
             id="mensaje"
             name="mensaje"
             required
             rows="5"
-            placeholder="Describe brevemente tu infraestructura actual y lo que necesitas resolver…"
-            class="w-full bg-bg-raised border border-gray-700 rounded px-3 py-2 text-sm text-white placeholder-gray-500 outline-none focus:border-primary focus:shadow-glow-sm transition resize-y"
+            placeholder="Ej.: Tenemos 8 PC en la oficina y el internet se cae varias veces al día…"
+            class="field resize-y"
           ></textarea>
         </div>
 
         <div class="flex flex-wrap items-center gap-4 pt-1">
-          <button type="submit" id="submit-btn" class="btn-primary">
-            ./enviar-mensaje
-          </button>
-          <span id="form-status" class="text-xs text-gray-500" role="status" aria-live="polite"></span>
+          <button type="submit" id="submit-btn" class="btn-primary">Enviar solicitud</button>
+          <span id="form-status" class="text-sm text-gray-400" role="status" aria-live="polite"></span>
         </div>
       </form>
     </div>
 
-    <!-- Canales directos y disponibilidad -->
-    <div class="panel p-5 space-y-5">
+    <!-- Canales directos -->
+    <div class="panel panel-static p-5 space-y-5">
       <div>
-        <div class="flex items-center gap-2 text-sm text-gray-400 mb-3">
-          <span class="text-primary">$</span>
-          <span class="text-white">cat</span>
-          <span class="text-secondary">~/contacto.txt</span>
-        </div>
+        <h2 class="font-display text-lg font-bold text-white mb-3">Prefiero escribir directo</h2>
         <ul class="space-y-3 text-sm">
-          {canales.map((canal) => (
+          {canales.map((c) => (
             <li>
-              <p class="text-xs text-gray-500 uppercase tracking-wide">{canal.label}</p>
-              <a href={canal.href} target="_blank" rel="noopener noreferrer" class="text-gray-200 hover:text-primary transition break-words">
-                {canal.value}
+              <p class="text-xs text-gray-500 uppercase tracking-wide">{c.label}</p>
+              <a href={c.href} target="_blank" rel="noopener noreferrer" class="text-gray-100 hover:text-primary transition break-words font-semibold">
+                {c.value}
               </a>
             </li>
           ))}
@@ -171,63 +114,60 @@ const canales = [
 
       <hr class="divider" />
 
-      <div class="flex items-center gap-3">
-        <span class="w-2 h-2 bg-primary rounded-full animate-pulse shadow-glow-sm"></span>
-        <span class="badge text-gray-300">Sistemas y soporte 24/7</span>
+      <div>
+        <p class="text-sm text-gray-200">
+          <span class="text-primary font-bold">Respuesta en menos de 2 horas</span> en horario laboral.
+        </p>
+        <p class="text-xs text-gray-500 leading-relaxed mt-2">
+          Atiendo en {SITE.ciudad}, {SITE.pais}. Muchos casos se resuelven de forma remota.
+        </p>
       </div>
-      <p class="text-xs text-gray-500 leading-relaxed">
-        <span class="text-secondary">//</span> Tiempo medio de respuesta:
-        <span class="text-primary">menos de 2 horas</span> en horario laboral.
-      </p>
     </div>
   </div>
 </Layout>
 
 <script>
-  const form = document.getElementById('contact-form');
-  const submitBtn = document.getElementById('submit-btn');
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
   const status = document.getElementById('form-status');
 
-  if (form && submitBtn && status) {
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const endpoint = form.getAttribute('action') || '';
-      if (!endpoint || endpoint.includes('TU_ID')) {
-        status.textContent = '[ CONFIGURA FORM_ENDPOINT EN contacto.astro ]';
-        status.classList.add('text-secondary');
-        return;
-      }
-
-      submitBtn.setAttribute('disabled', 'true');
-      submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
-      status.textContent = '[ ENVIANDO… ]';
-      status.classList.remove('text-secondary');
-      status.classList.add('text-gray-500');
-
-      try {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' },
-        });
-
-        if (response.ok) {
-          status.textContent = '[ MENSAJE ENVIADO ✓ TE RESPONDEMOS PRONTO ]';
-          status.classList.remove('text-gray-500');
-          status.classList.add('text-primary');
-          form.reset();
-        } else {
-          status.textContent = '[ ERROR AL ENVIAR — INTÉNTALO DE NUEVO ]';
-          status.classList.add('text-secondary');
-        }
-      } catch (error) {
-        status.textContent = '[ ERROR DE RED — INTÉNTALO DE NUEVO ]';
-        status.classList.add('text-secondary');
-      } finally {
-        submitBtn.removeAttribute('disabled');
-        submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
-      }
-    });
+  // Preselecciona el servicio si viene en la URL: /contacto?servicio=redes
+  const pre = new URLSearchParams(window.location.search).get('servicio');
+  const select = document.getElementById('servicio') as HTMLSelectElement | null;
+  if (pre && select && Array.from(select.options).some((o) => o.value === pre)) {
+    select.value = pre;
   }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!submitBtn || !status) return;
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+    status.className = 'text-sm text-gray-400';
+    status.textContent = 'Enviando…';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (response.ok) {
+        status.className = 'text-sm text-primary font-semibold';
+        status.textContent = '¡Mensaje enviado! Te respondo en menos de 2 horas en horario laboral.';
+        form.reset();
+      } else {
+        status.className = 'text-sm text-secondary font-semibold';
+        status.textContent = 'No se pudo enviar. Inténtalo de nuevo o escríbeme por WhatsApp.';
+      }
+    } catch {
+      status.className = 'text-sm text-secondary font-semibold';
+      status.textContent = 'Error de red. Inténtalo de nuevo o escríbeme por WhatsApp.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+    }
+  });
 </script>

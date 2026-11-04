@@ -1,0 +1,17 @@
+---
+import { waLink, WA_DIAGNOSTICO } from '../data/site.js';
+---
+
+<a
+  href={waLink(WA_DIAGNOSTICO)}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="wa-float"
+  aria-label="Escribir por WhatsApp para pedir un diagnóstico gratis"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5" aria-hidden="true">
+    <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z" />
+    <path d="M9 9.5c.3 2.3 2.4 4.4 5 5l1.2-1.2-1.8-1-.8.6a3.8 3.8 0 0 1-1.7-1.7l.6-.8-1-1.8L9 9.5Z" />
+  </svg>
+  <span class="hidden sm:inline">WhatsApp</span>
+</a>

@@ -1,119 +1,138 @@
 ---
-import logo from '../assets/logo.png';
-import { Image } from 'astro:assets';
+import T from './T.astro';
 
 const navLinks = [
-  { href: '/', label: '~/inicio' },
-  { href: '/servicios', label: '~/servicios' },
-  { href: '/blog', label: '~/blog' },
-  { href: '/contacto', label: '~/contacto' },
+  { href: '/servicios', light: 'Servicios', dark: '~/servicios' },
+  { href: '/sobre-mi', light: 'Sobre mí', dark: '~/sobre-mi' },
+  { href: '/recursos', light: 'Recursos', dark: '~/recursos' },
+  { href: '/blog', light: 'Blog', dark: '~/blog' },
+  { href: '/contacto', light: 'Contacto', dark: '~/contacto' },
 ];
+
+const path = Astro.url.pathname;
+const isActive = (href) => path === href || path.startsWith(href + '/');
 ---
 
-<header class="sticky top-0 z-40 border-b border-gray-700 bg-bg/90 backdrop-blur-sm shadow-glow-sm">
-  <div class="container mx-auto max-w-4xl px-4 py-3 flex items-center justify-between">
-    <!-- Logo y prompt -->
-    <a href="/" class="flex items-center gap-3 group">
-      <img 
-        src="/logo.png" 
-        alt="Tecnochui:~$ shadow" 
-        class="h-7 w-auto object-contain transition duration-300 group-hover:scale-105" 
-      />
-      <span class="text-gray-500 text-xs hidden sm:inline font-mono">v1.0</span>
+<header class="sticky top-0 z-40 border-b border-gray-700 bg-bg/90 backdrop-blur-sm">
+  <div class="container mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-3">
+    <!-- Logo -->
+    <a href="/" class="flex items-center shrink-0" aria-label="Tecnochui — inicio">
+      <img src="/logo-claro.png" alt="Tecnochui" width="143" height="26" class="logo-light h-7 w-auto object-contain" />
+      <img src="/logo.png" alt="Tecnochui" width="143" height="26" class="logo-dark h-7 w-auto object-contain" />
     </a>
-    <!-- Menú de navegación (escritorio) -->
-    <nav class="hidden md:flex items-center gap-6 text-sm">
+
+    <!-- Menú de escritorio -->
+    <nav class="hidden lg:flex items-center gap-1 text-sm" aria-label="Principal">
       {navLinks.map((link) => (
         <a
           href={link.href}
-          class="text-primary/80 hover:text-primary transition px-2 py-1 rounded border border-transparent hover:border-primary/20"
+          aria-current={isActive(link.href) ? 'page' : undefined}
+          class:list={[
+            'px-2.5 py-1.5 rounded border transition whitespace-nowrap',
+            isActive(link.href)
+              ? 'text-primary border-primary/40 font-semibold'
+              : 'text-gray-200 border-transparent hover:text-primary hover:border-primary/20',
+          ]}
         >
-          {link.label}
+          <T light={link.light} dark={link.dark} />
         </a>
       ))}
     </nav>
 
-    <!-- CTA (escritorio) -->
-    <div class="hidden md:block">
-      <a href="/contacto" class="btn-primary">
-        ./contactar
-      </a>
-    </div>
+    <div class="flex items-center gap-2">
+      <!-- Selector de tema -->
+      <button
+        id="theme-toggle"
+        type="button"
+        class="p-2 rounded border border-gray-600 text-gray-200 hover:text-primary hover:border-primary/50 transition"
+        aria-label="Cambiar entre tema claro y tema oscuro"
+        title="Cambiar tema"
+      >
+        <!-- luna: se muestra en tema claro -->
+        <svg class="logo-light w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z" />
+        </svg>
+        <!-- sol: se muestra en tema oscuro -->
+        <svg class="logo-dark w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+        </svg>
+      </button>
 
-    <!-- Botón hamburguesa (móvil) -->
-    <button
-      id="menu-toggle"
-      class="md:hidden text-primary hover:text-white transition p-2 rounded border border-transparent hover:border-primary/20"
-      aria-label="Abrir menú"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-    >
-      <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-      </svg>
-      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
+      <!-- Botón principal (escritorio) -->
+      <a href="/contacto" class="btn-primary hidden lg:inline-flex text-sm !py-2 whitespace-nowrap">Diagnóstico gratis</a>
+
+      <!-- Hamburguesa (móvil y tablet) -->
+      <button
+        id="menu-toggle"
+        class="lg:hidden text-gray-200 hover:text-primary transition p-2 rounded border border-gray-600"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+        <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 hidden">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
   </div>
 
-  <!-- Menú desplegable (móvil) -->
-  <nav
-    id="mobile-menu"
-    class="md:hidden hidden border-t border-gray-700 bg-bg-panel/95 backdrop-blur-sm"
-  >
-    <div class="container mx-auto max-w-4xl px-4 py-4 flex flex-col gap-1 text-sm">
+  <!-- Menú desplegable (móvil y tablet) -->
+  <nav id="mobile-menu" class="lg:hidden hidden border-t border-gray-700 bg-bg-panel" aria-label="Principal (móvil)">
+    <div class="container mx-auto max-w-6xl px-4 py-4 flex flex-col gap-1 text-sm">
       {navLinks.map((link) => (
         <a
           href={link.href}
-          class="text-primary/80 hover:text-primary transition px-3 py-2 rounded border border-transparent hover:border-primary/20 hover:bg-bg-panel-hover"
+          aria-current={isActive(link.href) ? 'page' : undefined}
+          class:list={[
+            'px-3 py-2 rounded border transition',
+            isActive(link.href)
+              ? 'text-primary border-primary/40 font-semibold'
+              : 'text-gray-200 border-transparent hover:text-primary hover:bg-bg-panel-hover',
+          ]}
         >
-          {link.label}
+          <T light={link.light} dark={link.dark} />
         </a>
       ))}
-      <a href="/contacto" class="btn-primary justify-center mt-2">
-        ./contactar
-      </a>
+      <a href="/contacto" class="btn-primary justify-center mt-2">Pedir diagnóstico gratis</a>
     </div>
   </nav>
 </header>
 
 <script>
+  // --- Selector de tema ---
+  const themeBtn = document.getElementById('theme-toggle');
+  themeBtn?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('tema', next);
+    } catch (e) {}
+  });
+
+  // --- Menú móvil ---
   const toggleButton = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const iconOpen = document.getElementById('icon-open');
   const iconClose = document.getElementById('icon-close');
 
-  if (toggleButton && mobileMenu && iconOpen && iconClose) {
-    toggleButton.addEventListener('click', () => {
-      const isOpen = mobileMenu.classList.toggle('hidden') === false;
-
-      toggleButton.setAttribute('aria-expanded', String(isOpen));
-      toggleButton.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
-      iconOpen.classList.toggle('hidden', isOpen);
-      iconClose.classList.toggle('hidden', !isOpen);
-    });
-
-    // Cierra el menú al navegar a un enlace (útil en mobile)
-    mobileMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        toggleButton.setAttribute('aria-expanded', 'false');
-        toggleButton.setAttribute('aria-label', 'Abrir menú');
-        iconOpen.classList.remove('hidden');
-        iconClose.classList.add('hidden');
-      });
-    });
-
-    // Cierra el menú si la ventana crece a escritorio
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768 && !mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
-        toggleButton.setAttribute('aria-expanded', 'false');
-        toggleButton.setAttribute('aria-label', 'Abrir menú');
-        iconOpen.classList.remove('hidden');
-        iconClose.classList.add('hidden');
-      }
-    });
+  function setMenu(open: boolean) {
+    if (!toggleButton || !mobileMenu || !iconOpen || !iconClose) return;
+    mobileMenu.classList.toggle('hidden', !open);
+    toggleButton.setAttribute('aria-expanded', String(open));
+    toggleButton.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    iconOpen.classList.toggle('hidden', open);
+    iconClose.classList.toggle('hidden', !open);
   }
+
+  toggleButton?.addEventListener('click', () => {
+    setMenu(mobileMenu?.classList.contains('hidden') ?? false);
+  });
+  mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) setMenu(false);
+  });
 </script>

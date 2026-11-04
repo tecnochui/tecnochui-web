@@ -1,98 +1,41 @@
 ---
-const services = [
-  {
-    name: 'Soporte Técnico',
-    tag: '$ htop --sys-health',
-    description:
-      'Helpdesk, mantenimiento a PCs y laptops (Windows/Linux), atención rápida y diagnóstico.',
-    icon: 'support',
-  },
-  {
-    name: 'Infraestructura & Servidores',
-    tag: '$ systemctl status',
-    description:
-      'Active Directory, Windows Server, Linux (Debian, Ubuntu, Mint), Samba LDAP, NAS/TrueNAS y copias de seguridad.',
-    icon: 'server',
-  },
-  {
-    name: 'Virtualización & Nube',
-    tag: '$ docker ps',
-    description: 'Proxmox, VMware ESXi, Hyper-V, Docker y Nextcloud.',
-    icon: 'layers',
-  },
-  {
-    name: 'Redes & Conectividad',
-    tag: '$ ping gateway',
-    description: 'Cableado estructurado, WiFi, switches, LAN/WAN.',
-    icon: 'network',
-  },
-  {
-    name: 'Ciberseguridad & Firewalls',
-    tag: '$ ufw status',
-    description:
-      'Sophos XG, Meraki, pfSense, OPNsense, IPTables/UFW, normativas ISO/NIST y desarrollo web seguro.',
-    icon: 'shield',
-  },
-  {
-    name: 'Capacitación, IA & Gobierno Digital',
-    tag: '$ man tecnochui',
-    description: 'Cursos a PyMES/gerentes, uso de IA en el trabajo, Ley de Infogobierno y manuales técnicos.',
-    icon: 'academic',
-  },
-];
-
-const icons = {
-  support: 'M4 5.5h16a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1Zm4 14h8M12 15.5v4',
-  server: 'M4 4.5h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1Zm0 8h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1Zm3 2h.01M7 6.5h.01',
-  shield: 'M12 3.5l7 3v5.2c0 4.4-2.98 8.4-7 9.8-4.02-1.4-7-5.4-7-9.8V6.5l7-3Z',
-  layers: 'M12 3.5l8 4.2-8 4.2-8-4.2 8-4.2Zm-8 8.4 8 4.2 8-4.2M4 16.1l8 4.2 8-4.2',
-  network: 'M12 4.5v4M6 18.5h12M6 18.5v-3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v3M12 8.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z',
-  academic:
-    'M12 4.5 2.5 9 12 13.5 21.5 9 12 4.5Zm-6 6.2v4.3c0 1.4 2.7 2.7 6 2.7s6-1.3 6-2.7v-4.3M21.5 9v6',
-};
+import { servicios } from '../data/servicios.js';
+import { icons } from '../data/icons.js';
 ---
 
-<section class="py-8 md:py-12">
+<section class="py-8 md:py-10">
   <div class="max-w-2xl mb-8">
-    <span class="eyebrow mb-4">Áreas de servicio</span>
+    <span class="eyebrow mb-3">Qué hago por tu negocio</span>
     <h2 class="font-display text-2xl md:text-3xl font-bold text-white mt-2">
-      Seis pilares, <span class="text-primary text-glow">un solo equipo</span>.
+      Seis áreas de trabajo, <span class="text-primary text-glow">un solo responsable</span>.
     </h2>
     <p class="text-gray-300 mt-3 leading-relaxed">
-      <span class="text-secondary">//</span> Cada pilar se administra con procesos documentados
-      y monitoreo continuo, para que la tecnología deje de ser un riesgo y se convierta en ventaja.
+      Desde la PC que no enciende hasta la seguridad de toda tu red. Cada área tiene su propia
+      página con los problemas que resuelve, lo que incluye y preguntas frecuentes.
     </p>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-4">
-    {services.map((service) => (
-      <div class="panel p-6 flex flex-col justify-between">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {servicios.map((s) => (
+      <a href={`/servicios/${s.slug}`} class="panel p-6 flex flex-col justify-between group no-underline">
         <div>
           <div class="flex items-center justify-between">
             <span class="inline-flex items-center justify-center w-10 h-10 rounded border border-gray-700 text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                <path d={icons[service.icon]} />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5" aria-hidden="true">
+                <path d={icons[s.icon]} />
               </svg>
             </span>
-            <span class="badge text-gray-400">{service.tag}</span>
+            <span class="badge term-only text-gray-400">{s.term}</span>
           </div>
 
-          <h3 class="font-display font-bold text-white mt-4 text-lg leading-snug">
-            {service.name}
-          </h3>
-          <p class="text-gray-300 mt-2 leading-relaxed text-sm">
-            {service.description}
-          </p>
+          <h3 class="font-display font-bold text-white mt-4 text-lg leading-snug">{s.nombre}</h3>
+          <p class="text-gray-300 mt-2 leading-relaxed text-sm">{s.corto}</p>
         </div>
 
-        <a
-          href="/servicios"
-          class="inline-flex items-center gap-1 text-sm text-secondary hover:text-primary transition mt-5 group"
-        >
-          ./ver-detalle
-          <span class="transition group-hover:translate-x-0.5">→</span>
-        </a>
-      </div>
+        <span class="inline-flex items-center gap-1 text-sm font-semibold text-secondary group-hover:text-primary transition mt-5">
+          Ver detalle <span class="transition group-hover:translate-x-0.5">→</span>
+        </span>
+      </a>
     ))}
   </div>
 </section>

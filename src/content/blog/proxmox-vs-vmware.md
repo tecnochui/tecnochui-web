@@ -2,7 +2,7 @@
 title: "Proxmox vs VMware ESXi: ¿cuál elegir en 2026?"
 description: "Ambos resuelven virtualización de servidores, pero parten de filosofías distintas. Comparamos costos, curva de aprendizaje y casos de uso reales."
 pubDate: 2026-07-15
-author: tecnochui
+author: Tecnochui
 tags: [virtualizacion, infraestructura]
 readingTime: "7 min"
 ---
@@ -36,4 +36,4 @@ qm start 101
 
 > No existe una respuesta universal: existe la pregunta correcta sobre qué tan crítico es el uptime, cuánto presupuesto hay para licenciamiento y qué tan cómodo está el equipo interno con cada stack.
 
-En tecnochui evaluamos ambos escenarios antes de migrar cualquier servidor físico — la decisión se toma con datos de tu operación real, no por preferencia de marca.
+En Tecnochui evaluamos ambos escenarios antes de migrar cualquier servidor físico — la decisión se toma con datos de tu operación real, no por preferencia de marca.

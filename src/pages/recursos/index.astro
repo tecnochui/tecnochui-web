@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { recursos } from '../../data/recursos.js';
+import { getServicio } from '../../data/servicios.js';
+---
+
+<Layout
+  title="Checklists gratuitos de TI para pymes | Tecnochui"
+  description="Checklists gratuitos de ciberseguridad, respaldos, redes, servidores y uso de IA para revisar tu negocio. Márcalos en pantalla o guárdalos como PDF."
+>
+  <div class="term-only items-center gap-2 text-sm text-gray-400 mb-2">
+    <span class="text-primary">$</span><span class="text-white">ls</span>
+    <span class="text-secondary">~/recursos</span>
+  </div>
+
+  <span class="eyebrow mb-3">Recursos gratuitos</span>
+  <h1 class="font-display text-3xl md:text-4xl font-bold text-white leading-tight mt-2">
+    Checklists para revisar la tecnología de tu negocio
+  </h1>
+  <p class="text-lg text-gray-300 mt-4 max-w-3xl leading-relaxed">
+    Listas cortas y prácticas para detectar problemas antes de que cuesten dinero. Márcalas en pantalla
+    o guárdalas como PDF. Si algo no te cuadra, te hago un diagnóstico gratis.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
+    {recursos.map((r) => (
+      <a href={`/recursos/${r.slug}`} class="panel p-5 flex flex-col">
+        <p class="text-xs uppercase tracking-wide text-primary font-semibold">{getServicio(r.servicio)?.nombre}</p>
+        <h2 class="font-display text-lg font-bold text-white mt-1 leading-snug">{r.titulo}</h2>
+        <p class="text-sm text-gray-300 mt-2 leading-relaxed">{r.desc}</p>
+        <span class="text-sm font-semibold text-secondary mt-auto pt-4">{r.items.length} puntos · Abrir →</span>
+      </a>
+    ))}
+  </div>
+</Layout>

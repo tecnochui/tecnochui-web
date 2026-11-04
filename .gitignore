@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Salida de compilación y caché de Astro
+dist/
+.astro/
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Registros
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Copias de respaldo
+*.bk

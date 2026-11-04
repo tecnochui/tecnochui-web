@@ -1,0 +1,131 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Solo artículos publicados (draft: false), ordenados del más reciente al más antiguo.
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Lista de etiquetas únicas presentes en los artículos, para armar los filtros.
+/** @type {string[]} */
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+
+const dateFormatter = new Intl.DateTimeFormat('es-VE', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+---
+
+<Layout
+  title="Blog de tecnología y ciberseguridad para pymes | Tecnochui"
+  description="Guías claras sobre soporte técnico, ciberseguridad, redes, servidores y virtualización para quienes dirigen un negocio en Venezuela."
+>
+  <div class="mb-8">
+    <div class="term-only items-center gap-2 text-sm text-gray-400 mb-2">
+      <span class="text-primary">$</span>
+      <span class="text-white">ls</span>
+      <span class="text-secondary">-la</span>
+      <span class="text-gray-400">~/blog</span>
+      <span class="ml-auto text-xs badge text-gray-400">[ {posts.length} ARTÍCULOS ]</span>
+    </div>
+    <h1 class="font-display text-3xl md:text-4xl font-bold text-white">Blog de tecnología y ciberseguridad</h1>
+    <p class="text-gray-300 mt-3 max-w-2xl leading-relaxed">
+      Guías claras sobre soporte, seguridad, redes y servidores, escritas para quienes dirigen un negocio.
+    </p>
+  </div>
+
+  <!-- Filtros por etiqueta -->
+  <div id="tag-filters" class="flex flex-wrap gap-2 mb-8">
+    <button
+      type="button"
+      data-filter="todos"
+      class="tag-filter-btn badge border-primary/50 text-primary"
+      aria-pressed="true"
+    >
+      #todos
+    </button>
+    {tags.map((tag) => (
+      <button
+        type="button"
+        data-filter={tag}
+        class="tag-filter-btn badge text-gray-400 hover:text-primary hover:border-primary/40 transition"
+        aria-pressed="false"
+      >
+        #{tag}
+      </button>
+    ))}
+  </div>
+
+  <!-- Grid de artículos -->
+  <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    {posts.map((post, index) => (
+      <a
+        href={`/blog/${post.id}/`}
+        data-tags={post.data.tags.join(',')}
+        class:list={['panel p-5 flex flex-col group', index === 0 ? 'panel-glow md:col-span-2' : '']}
+      >
+        <div class="flex items-center gap-3 text-xs text-gray-500 mb-3">
+          <span>{dateFormatter.format(post.data.pubDate)}</span>
+          <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+          <span>{post.data.readingTime} de lectura</span>
+          <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+          <span class="text-secondary">{post.data.author}</span>
+        </div>
+
+        <h2 class="font-display font-bold text-lg text-white group-hover:text-primary transition leading-snug">
+          {post.data.title}
+        </h2>
+        <p class="text-sm text-gray-300 mt-2 leading-relaxed">
+          {post.data.description}
+        </p>
+
+        <div class="flex flex-wrap gap-2 mt-4">
+          {post.data.tags.map((tag) => (
+            <span class="badge text-gray-400">#{tag}</span>
+          ))}
+        </div>
+
+        <span class="inline-flex items-center gap-1 text-sm text-secondary group-hover:text-primary transition mt-4">
+          Leer artículo <span class="transition group-hover:translate-x-0.5">→</span>
+        </span>
+      </a>
+    ))}
+  </div>
+
+  <p id="empty-state" class="hidden text-gray-500 text-sm mt-8">
+    No hay artículos con esa etiqueta todavía.
+  </p>
+</Layout>
+
+<script>
+  const buttons = document.querySelectorAll('.tag-filter-btn');
+  const cards = document.querySelectorAll('#posts-grid > a');
+  const emptyState = document.getElementById('empty-state');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.getAttribute('data-filter');
+
+      buttons.forEach((btn) => {
+        const isActive = btn === button;
+        btn.setAttribute('aria-pressed', String(isActive));
+        btn.classList.toggle('text-primary', isActive);
+        btn.classList.toggle('border-primary/50', isActive);
+        btn.classList.toggle('text-gray-400', !isActive);
+      });
+
+      let visibleCount = 0;
+      cards.forEach((card) => {
+        const cardTags = (card.getAttribute('data-tags') || '').split(',');
+        const matches = filter === 'todos' || cardTags.includes(filter);
+        card.classList.toggle('hidden', !matches);
+        if (matches) visibleCount += 1;
+      });
+
+      if (emptyState) {
+        emptyState.classList.toggle('hidden', visibleCount > 0);
+      }
+    });
+  });
+</script>

@@ -1,84 +1,65 @@
 ---
-// Líneas simuladas de una terminal de infraestructura.
-// type: 'comment' | 'command' | 'output' | 'ok' | 'muted'
-const terminalLines = [
-  { type: 'command', prompt: '~/infra', text: 'ssh admin@core.tecnochui.internal' },
-  { type: 'output', text: 'Última conexión: hoy desde 10.0.4.12' },
-  { type: 'command', prompt: '~/infra', text: 'terraform apply -auto-approve' },
-  { type: 'ok', text: '✓ 12 recursos aplicados sin errores' },
-  { type: 'command', prompt: '~/infra', text: 'kubectl get pods -n prod' },
-  { type: 'output', text: 'api-gateway     Running   99.98% uptime' },
-  { type: 'output', text: 'firewall-edge   Running   99.99% uptime' },
-  { type: 'command', prompt: '~/infra', text: 'ufw status verbose' },
-  { type: 'ok', text: '✓ Firewall activo — 0 puertos expuestos' },
+import { SITE, waLink, WA_DIAGNOSTICO } from '../data/site.js';
+
+const stats = [
+  { n: '+18', t: 'años en soporte técnico de PC y laptops' },
+  { n: '+8', t: 'años en infraestructura, redes y servidores' },
+  { n: '+10', t: 'años trabajando con Linux' },
+  { n: '< 2 h', t: 'de respuesta en horario laboral' },
 ];
 ---
 
-<section class="py-8 md:py-12">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-    <!-- Columna izquierda: titular y CTAs -->
-    <div class="relative">
-      <span class="eyebrow mb-5">Sistema en línea 24/7</span>
+<section class="py-6 md:py-12">
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+    <!-- Mensaje principal -->
+    <div class="lg:col-span-3">
+      <span class="eyebrow mb-4">Soporte de TI para pymes · {SITE.ciudad}</span>
 
-      <h1 class="font-display text-4xl md:text-5xl xl:text-6xl font-bold leading-[1.05] mt-2">
-        <span class="text-white">Infraestructura</span>
-        <span class="text-primary text-glow"> tecnológica</span>
-        <br />
-        <span class="text-secondary text-glow-blue">a prueba de fallos.</span>
+      <h1 class="font-display text-4xl md:text-5xl font-bold leading-[1.08] mt-3 text-white">
+        Tecnología que funciona,{' '}
+        <span class="text-primary text-glow">para que tu negocio no se detenga.</span>
       </h1>
 
-      <p class="text-base md:text-lg text-gray-300 max-w-lg leading-relaxed mt-5">
-        <span class="text-secondary">//</span> Infraestructura, ciberseguridad, virtualización, redes
-        y capacitación técnica — todo administrado como código, con la disciplina de un equipo
-        de operaciones que nunca duerme.
+      <p class="text-base md:text-lg text-gray-300 max-w-xl leading-relaxed mt-5">
+        Soporte técnico, redes, servidores, ciberseguridad y desarrollo web a la medida con IA para pymes,
+        profesionales y personas en Venezuela. Detrás de Tecnochui estoy yo, Jesús Andrade: atiendo tu caso de principio a fin.
       </p>
 
-      <div class="flex flex-wrap items-center gap-4 mt-8">
-        <a href="/contacto" class="btn-primary">./contactar</a>
-        <a href="/servicios" class="btn-secondary">./servicios</a>
+      <div class="flex flex-wrap items-center gap-3 mt-7">
+        <a href="/contacto" class="btn-primary">Pedir diagnóstico gratis</a>
+        <a href={waLink(WA_DIAGNOSTICO)} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+          Escribir por WhatsApp
+        </a>
       </div>
 
-      <div class="mt-8 flex items-center gap-3 text-sm">
-        <span class="cursor-blink text-primary">_</span>
-        <span class="text-xs text-gray-500 tracking-wide">
-          SYSTEM: <span class="text-primary">ONLINE</span> · UPTIME: <span class="text-secondary">24/7</span>
-        </span>
-      </div>
+      <p class="text-sm text-gray-400 mt-4">
+        El diagnóstico es gratis, incluso si hay que hacerlo en sitio.
+      </p>
     </div>
 
-    <!-- Columna derecha: panel de terminal simulado -->
-    <div class="panel panel-glow relative overflow-hidden">
-      <!-- Barra superior de la ventana -->
-      <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-700 bg-bg-raised">
+    <!-- Credenciales -->
+    <div class="lg:col-span-2 panel panel-static panel-glow overflow-hidden">
+      <div class="term-only items-center gap-2 px-4 py-3 border-b border-gray-700 bg-bg-raised">
         <span class="w-2.5 h-2.5 rounded-full bg-gray-600"></span>
         <span class="w-2.5 h-2.5 rounded-full bg-gray-600"></span>
-        <span class="w-2.5 h-2.5 rounded-full bg-primary shadow-glow-sm"></span>
-        <span class="ml-3 text-xs text-gray-400">infra.sh — tecnochui</span>
+        <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+        <span class="ml-3 text-xs text-gray-400">tecnochui — resumen</span>
       </div>
 
-      <!-- Cuerpo de la terminal -->
-      <div class="px-4 py-4 md:px-5 md:py-5 font-mono text-[13px] md:text-sm leading-relaxed overflow-x-auto">
-        {terminalLines.map((line) => (
-          <div class="whitespace-pre">
-            {line.type === 'command' && (
-              <p>
-                <span class="text-secondary">{line.prompt}</span>
-                <span class="text-gray-500"> $ </span>
-                <span class="text-white">{line.text}</span>
-              </p>
-            )}
-            {line.type === 'output' && (
-              <p class="text-gray-400 pl-1">{line.text}</p>
-            )}
-            {line.type === 'ok' && (
-              <p class="text-primary pl-1">{line.text}</p>
-            )}
-          </div>
-        ))}
-        <p class="mt-1">
-          <span class="text-secondary">~/infra</span>
-          <span class="text-gray-500"> $ </span>
-          <span class="cursor-blink text-white"></span>
+      <div class="p-5">
+        <p class="text-xs uppercase tracking-wide text-gray-400 mb-4">Experiencia comprobable</p>
+        <dl class="grid grid-cols-2 gap-4">
+          {stats.map((s) => (
+            <div>
+              <dt class="font-display text-3xl font-bold text-primary text-glow">{s.n}</dt>
+              <dd class="text-sm text-gray-300 leading-snug mt-1">{s.t}</dd>
+            </div>
+          ))}
+        </dl>
+        <hr class="divider my-5" />
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Gerente de Redes y Soporte Técnico de la Dirección de TI de la Alcaldía de Chacao.{' '}
+          <a href="/sobre-mi" class="font-semibold whitespace-nowrap">Conoce mi trayectoria →</a>
         </p>
       </div>
     </div>

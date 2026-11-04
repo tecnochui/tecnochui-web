@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { SITE, waLink, WA_DIAGNOSTICO } from '../data/site.js';
+
+// Fotos: dejar en src/assets/sobre-mi/ con estos nombres (jpg, png o webp):
+//   perfil.*     foto de perfil (cuadrada o vertical)
+//   ponencia.*   foto dando una charla (vertical u horizontal)
+// Si no existen, la página muestra iniciales y se oculta la sección de charlas con foto.
+const fotos = import.meta.glob('../assets/sobre-mi/*.{jpg,jpeg,png,webp}', { eager: true });
+const buscar = (nombre) =>
+  Object.entries(fotos).find(([ruta]) => ruta.split('/').pop().startsWith(nombre))?.[1]?.default;
+const perfil = buscar('perfil');
+const ponencia = buscar('ponencia');
+
+const stats = [
+  { n: '+18', t: 'años en soporte técnico a PC y laptops' },
+  { n: '+8', t: 'años en infraestructura, redes, servidores, Docker, Windows Server y LDAP' },
+  { n: '+10', t: 'años con Linux' },
+  { n: '+3', t: 'años programando' },
+  { n: '1,5', t: 'años usando IA para desarrollo web, sistemas y scripts' },
+  { n: '+3', t: 'años en gobierno electrónico, en lo técnico y en lo legal' },
+];
+
+const hitos = [
+  {
+    t: 'Gerente de Redes y Soporte Técnico',
+    d: 'Dirección de Tecnología de Información de la Alcaldía de Chacao, desde 2020. En la alcaldía desde 2018 con otros cargos.',
+  },
+  {
+    t: 'Autor del proyecto de ordenanza de gobierno electrónico de Chacao',
+    d: 'Un trabajo que une la parte técnica y la legal del gobierno electrónico.',
+  },
+  {
+    t: 'Voz en medios',
+    d: 'Invitado en varios programas de Unión Radio para hablar de ciberseguridad y protección de datos.',
+  },
+  {
+    t: 'Charlas y formación',
+    d: 'Charlas en el GitHub Dev Days Caracas 2026, en la UCAB, y clases privadas de ciberseguridad para pymes y personas.',
+  },
+];
+
+const tecnologias = [
+  'Windows Server', 'Active Directory', 'LDAP / Samba', 'Linux', 'Docker', 'Proxmox', 'VMware ESXi', 'Hyper-V',
+  'TrueNAS', 'Nextcloud', 'pfSense', 'OPNsense', 'Sophos XG', 'Cisco Meraki', 'NIST / ISO',
+  'Desarrollo web', 'APIs', 'IA aplicada al desarrollo',
+];
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.titular,
+  url: `${SITE.url}/sobre-mi`,
+  jobTitle: 'Gerente de Redes y Soporte Técnico',
+  description:
+    'Informático y futuro abogado en formación. Soporte técnico, infraestructura, redes, ciberseguridad y gobierno electrónico en Caracas, Venezuela.',
+  worksFor: { '@type': 'Organization', name: 'Alcaldía de Chacao' },
+  brand: { '@type': 'Brand', name: SITE.nombre },
+  address: { '@type': 'PostalAddress', addressLocality: 'Caracas', addressCountry: 'VE' },
+  knowsAbout: ['Soporte técnico', 'Redes', 'Servidores', 'Linux', 'Ciberseguridad', 'Gobierno electrónico', 'Protección de datos'],
+  sameAs: SITE.redes.map((r) => r.href),
+};
+---
+
+<Layout
+  title="Jesús Andrade, informático en Caracas | Tecnochui"
+  description="Jesús Andrade: informático y futuro abogado. Más de 18 años en soporte técnico y 8 en infraestructura. Gerente de Redes de la Alcaldía de Chacao."
+  jsonLd={ld}
+>
+  <div class="term-only items-center gap-2 text-sm text-gray-400 mb-2">
+    <span class="text-primary">$</span><span class="text-white">whoami</span>
+  </div>
+
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+    <div class="md:col-span-2">
+      <span class="eyebrow mb-3">Sobre mí</span>
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-white leading-tight mt-2">
+        Jesús Andrade, informático y consultor de TI en Caracas
+      </h1>
+      <p class="text-lg text-gray-300 mt-4 leading-relaxed">
+        Informático y futuro abogado en formación. Detrás de Tecnochui estoy yo: cuando me escribes,
+        hablas con la misma persona que diagnostica, propone y resuelve.
+      </p>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <a href="/contacto" class="btn-primary">Pedir diagnóstico gratis</a>
+        <a href={waLink(WA_DIAGNOSTICO)} target="_blank" rel="noopener noreferrer" class="btn-secondary">Escribir por WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="flex justify-center md:justify-end">
+      {perfil ? (
+        <Image
+          src={perfil}
+          alt="Jesús Andrade, fundador de Tecnochui"
+          width={480}
+          height={480}
+          loading="eager"
+          class="w-48 h-48 md:w-60 md:h-60 rounded-2xl object-cover border border-gray-700"
+        />
+      ) : (
+        <div class="w-48 h-48 md:w-60 md:h-60 rounded-2xl border border-gray-700 bg-bg-panel flex items-center justify-center font-display text-6xl font-bold text-primary text-glow" aria-hidden="true">
+          JA
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-display text-2xl font-bold text-white mb-5">Experiencia</h2>
+    <dl class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      {stats.map((s) => (
+        <div class="panel panel-static p-4">
+          <dt class="font-display text-3xl font-bold text-primary text-glow">{s.n}</dt>
+          <dd class="text-sm text-gray-300 mt-1 leading-snug">{s.t}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-display text-2xl font-bold text-white mb-5">Trayectoria</h2>
+    <ul class="space-y-4">
+      {hitos.map((h) => (
+        <li class="panel panel-static p-5">
+          <h3 class="font-display font-bold text-white">{h.t}</h3>
+          <p class="text-sm text-gray-300 mt-1 leading-relaxed">{h.d}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {ponencia && (
+    <section class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <figure class="md:order-2 max-w-xs w-full mx-auto md:mx-0 md:ml-auto">
+        <Image
+          src={ponencia}
+          alt="Jesús Andrade dando una charla frente a una pantalla de proyección"
+          width={600}
+          class="w-full rounded-xl border border-gray-700 object-cover"
+        />
+        <figcaption class="text-sm text-gray-400 mt-2">Charla en el GitHub Dev Days Caracas 2026, UCAB.</figcaption>
+      </figure>
+      <div class="md:col-span-2 md:order-1">
+        <h2 class="font-display text-2xl font-bold text-white mb-3">En escena</h2>
+        <p class="text-gray-300 leading-relaxed max-w-xl">
+          Me gusta explicar la tecnología de forma clara, sea en una charla, en la radio o en una clase
+          privada para tu equipo.
+        </p>
+        <a href="/servicios/capacitacion-ia-gobierno-digital" class="inline-block font-semibold mt-4">Ver capacitación →</a>
+      </div>
+    </section>
+  )}
+
+  <section class="mt-12">
+    <h2 class="font-display text-2xl font-bold text-white mb-2">Informática y derecho</h2>
+    <p class="text-gray-300 leading-relaxed max-w-3xl">
+      Combino la experiencia técnica con la formación en derecho. Eso me permite explicar la tecnología
+      y su marco legal, por ejemplo en protección de datos y gobierno electrónico, en un lenguaje que
+      entiende quien dirige un negocio.
+    </p>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-display text-2xl font-bold text-white mb-4">Con qué trabajo</h2>
+    <div class="flex flex-wrap gap-2">
+      {tecnologias.map((t) => <span class="badge">{t}</span>)}
+    </div>
+  </section>
+
+  <section class="panel panel-static panel-glow p-8 text-center mt-12">
+    <h2 class="font-display text-2xl font-bold text-white">Hablemos de tu caso</h2>
+    <p class="text-gray-300 mt-2">El diagnóstico es gratis. Respondo en menos de 2 horas en horario laboral.</p>
+    <div class="flex flex-wrap justify-center gap-3 mt-5">
+      <a href="/contacto" class="btn-primary">Pedir diagnóstico gratis</a>
+      <a href={waLink(WA_DIAGNOSTICO)} target="_blank" rel="noopener noreferrer" class="btn-secondary">Escribir por WhatsApp</a>
+    </div>
+  </section>
+</Layout>
