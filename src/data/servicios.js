@@ -111,7 +111,7 @@ export const servicios = [
     h1: 'Redes, WiFi y cableado estructurado en Caracas',
     seoTitle: 'Redes, WiFi y cableado estructurado en Caracas | Tecnochui',
     seoDesc:
-      'Diseño e instalación de redes LAN/WAN, WiFi, switches y cableado estructurado para oficinas y empresas en Caracas.',
+      'Diseño e instalación de redes LAN/WAN, WiFi, switches y cableado estructurado para oficinas y empresas en Caracas. Diagnóstico gratis y respuesta rápida.',
     lead: 'Una red bien diseñada es la que nadie nota porque simplemente funciona. Diseño, instalo y administro redes para oficinas y empresas.',
     problemas: [
       'WiFi que se cae o no llega a todas las áreas',
@@ -150,7 +150,7 @@ export const servicios = [
     h1: 'Ciberseguridad y firewalls para pymes en Venezuela',
     seoTitle: 'Ciberseguridad y firewalls para pymes en Venezuela | Tecnochui',
     seoDesc:
-      'Firewalls (Sophos, Meraki, pfSense, OPNsense), políticas de seguridad y auditoría NIST/ISO para pymes en Caracas y Venezuela.',
+      'Firewalls (Sophos, Meraki, pfSense, OPNsense), políticas de seguridad y auditoría NIST/ISO para pymes en Caracas y Venezuela. Diagnóstico gratis.',
     lead: 'Las pymes también son objetivo de fraudes, ransomware y robo de cuentas. Te ayudo a cerrar las puertas más comunes sin complicarte la operación.',
     problemas: [
       'Correos falsos (phishing) que piden claves o pagos',
@@ -190,7 +190,7 @@ export const servicios = [
     h1: 'Capacitación en ciberseguridad, uso correcto de la IA y gobierno digital',
     seoTitle: 'Cursos de ciberseguridad y uso correcto de la IA | Tecnochui',
     seoDesc:
-      'Cursos y asesoría en ciberseguridad, uso correcto de la IA, gobierno electrónico y Ley de Infogobierno para pymes, gerentes y organismos.',
+      'Cursos y asesoría en ciberseguridad, uso correcto de la IA, gobierno electrónico y Ley de Infogobierno para pymes, gerentes y organismos en Venezuela.',
     lead: 'Combino la experiencia técnica con la formación en derecho para explicar la tecnología y su marco legal en un lenguaje que se entiende.',
     problemas: [
       'Empleados que caen en correos falsos',
