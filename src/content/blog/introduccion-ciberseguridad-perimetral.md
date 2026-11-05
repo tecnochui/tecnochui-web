@@ -1,6 +1,6 @@
 ---
 title: "Introducción a la ciberseguridad perimetral"
-description: "Firewalls, segmentación y políticas de acceso: los tres pilares que definen qué tan expuesta está tu red antes de que ocurra un incidente."
+description: "Firewalls, segmentación y políticas de acceso: los tres pilares que definen qué tan expuesta está tu red antes de que ocurra un incidente. Guía para pymes."
 pubDate: 2026-07-18
 author: Tecnochui
 tags: [ciberseguridad]
